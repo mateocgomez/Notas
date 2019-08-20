@@ -1,0 +1,30 @@
+Alexa recibe un JSON y regresa un JSON.
+El lenguaje siempre limita varios modelos y skills con los cuales se pueda trabajar.
+
+Interaction Model: lo que le da el input y el output, son reglas de como manejar y dar prioridad dependiendo a lo que uno le diga al usuario.
+    
+    1. Invocation Name: Es la palabra clave para invocar el nombre de la skill, tiene reglas en especifico como:
+        -Tener dos palabras
+        -Alfabeto
+        -En la pagina se pueden conocer un poco mas 
+
+    Intents, Utterance Samples , Slots son los componentes del interaction model.
+    El modelo se puede guardar y continuar trabajando con el, o build el modelo y se construye el y se preocesa el mismo.
+
+    2. Intents: Lo que el usuario intenta hacer , acciones que el usuario quiere hacer, los intents son JSON, y se les llama intents schema, tienen unos intents que ya viene por defecto al crear el skill
+    3. Utterances: Dentro de los intents estan los utterances son las intenciones que se intentan hacer, el usuario puede decir saluda a todos, saludar, saluda al mundo, entre mas se entre el algoritmo con las acciones que tenga que ver , 
+        lo que el usuario habla, lo que el usuario dice para activar ese intento, es recomendable usar unos 10.
+    4. Slots: son espacios para definir variables
+
+
+En node.js se puede trabajar con el ask-sdk-core 
+
+    -Función LaunchRequestHandler = Cuando se invoca alexa empieza con esta funcion, es la primera funcion con la que se trabaja.
+        Speak: habla  reprompt: es para volver a intentarlo
+    -Función SaludarMundoIntentHandler = Es una de las intenciones con las que trabaja que se creo anteriormente.
+
+    exports.handler = todos los handler se deben exportar
+
+    developer.amazon/alexa
+    @alexadevs
+    @amazonalexa twitch
