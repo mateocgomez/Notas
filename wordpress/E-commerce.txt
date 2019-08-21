@@ -1,0 +1,4 @@
+- E-commerce en WordPress
+
+Administracion de la tienda ¿ quién administra la tienda ? , viabilidad y costos de la tienda ¿ pasarela de pagos de la tienda?
+Inversión de la tienda, Personalización de la tienda (Esfuerzo/costos/tiempos/viabilidad)

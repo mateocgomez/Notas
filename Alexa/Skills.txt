@@ -65,3 +65,25 @@ Pasos para crear un Skill backend
 3. AWS ( backend )
 4. Probar el skill
 5. Subir aplicación
+
+
+Slots Customizados:
+    - Añadir, custom slots, se le van agregando distintos valores con distintos valores 
+    - Para crear un slot se debe poner en mayuscula el slot como buena practica
+    - Los sinonimos se pueden colocar para identificar distintas palabras que el usuario lo puede llamar
+    - En los utterance se puden agregar los Slots
+
+Skill Id: es el identificador del skill y se encuentra en el dashboard de los skills , en el punto donde dice skill id es el id al cual se va a trabajar.
+            o en los endpoints del alexa developer console tambien se puede encontrar el skill id
+
+
+Codigo en Node.JS de alexa
+
+    1. Requiere el ask-sdk
+    2. Siempre los handler que son los manejadores estan esperando una intencion para que se ejecute
+    3. Tener en cuenta bien la semantica de español con acentos, signos de interrogación y admiración bien puestos.
+
+
+ASK CLI  (Alexa Skills Kits CLI)
+    1. En Windows instalar npm install -g --production windows-build-tools, usar powershell en administrador
+    2. Instalar Ask CLI npm install -g ask-cli
