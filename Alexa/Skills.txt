@@ -87,3 +87,42 @@ Codigo en Node.JS de alexa
 ASK CLI  (Alexa Skills Kits CLI)
     1. En Windows instalar npm install -g --production windows-build-tools, usar powershell en administrador
     2. Instalar Ask CLI npm install -g ask-cli
+    3. ask init inicia el alexa skills kit
+
+COMANDO ASK CLI
+    1. ask new -> crea un template de un proyecto completo
+    2. ask deploy -> despliega el codigo a la nube
+    3. ask clone -> se clona un proyecto que ya se tenga en la nube en el alexa developer console
+    4. ask simulate -> simula mediante linea de comandos el skill de alexa
+    4. ask diff -> compara la version remota contra la versión local
+
+TIENDA SKILL
+    1. https://www.amazon.es/b?ie=UTF8&node=13944662031
+    2. En la pestaña de distribución se deben llenar los campos:
+        a. Nombre del skill
+        b. Una descripción de la skill en una frase
+        c. Una descripción detallada de la skill
+        d. Que ahí nuevo
+        e. frases de ejemplo es recomendable empezar a usar alexa
+        f. icono de la skill ( Alexa icon builder , mediante este podemos revisar los iconos o editarlos )
+        g. Categorias : es importante tenerla clasificada en la categoria acorde con el fin de poder seleccionar la adecuada
+        h. keywords: palabras claves que en el momento de busqueda sirvan de forma adecuada
+        i. privacy policy url y terms of use, estas politicas sirven cuando se piden datos del usuario y se guarden a alguna base de datos, debe contener los terminos y privacidad para redactarlos
+        j. privacy & compliance : se pueden hacer compras con dinero reglas
+        k. si recolecta informacion personal
+        l. si esta para niños pequeños menores de 13 años
+        m. si contiene anuncios
+        n. que la skill sirva para diferentes paises
+        o. testing information: las personas que lo prueban instrucciones para estos
+    3. Disponibilidad en diversos paises la cual es public
+        Alexa for business organizations, skills para negocios
+    
+    BETA TEST -> pruebas para otros desarrolladores.
+
+    Se envia para revisión
+
+    ¿ Qué pasa cuando no se aprueba la skill?
+        Code Review, se demora entre 1 a 3 días para la certificación
+        Puede que existan alguno que no tienen sentido como por ejemplo el codigo de invocación 
+        No se demora mucho tiempo en la revisión
+        
