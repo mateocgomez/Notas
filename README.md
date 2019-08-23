@@ -1,3 +1,5 @@
 # Notas
-Notas de las tecnologias
-Tiene distintas notas de las tecnologias que voy aprendiendo
+Documentación o apuntes de distintas conferencias y cursos que he ido desarrollando 
+
+
+#Mateo
