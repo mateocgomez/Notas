@@ -1,6 +1,6 @@
 
 
-Directivas Vue.js
+<h1>Directivas Vue.js</h1>
 
     1. v-bind : es un enlace de datos, hacia un atributo que este en data, se implementa con :src los dos puntos es la abreviatura
     2. v-model : permite una connexion directa entre un dato  , le podemos poner a los v-model que son de tipo number ej: v-model.number, enlace de datos doble es decir recibe la informacion que se envia desde cualquier input o cualquier otro campo
