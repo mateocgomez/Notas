@@ -24,3 +24,11 @@ pingdom
 gtmetrix
 pagespeed insights
 optimizer
+
+HOTJAR Mapa de calor
+
+Marketing y Contenigo
+    - Google MyBusiness
+    - Email Marketing - MailChimp
+    - CMR
+    - GOOGLE ANALYTICS

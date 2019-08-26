@@ -3,7 +3,7 @@
 Directivas Vue.js
 
     1. v-bind : es un enlace de datos, hacia un atributo que este en data, se implementa con :src los dos puntos es la abreviatura
-    2. v-model : permite una connexion directa entre un dato  , le podemos poner a los v-model que son de tipo number ej: v-model.number
+    2. v-model : permite una connexion directa entre un dato  , le podemos poner a los v-model que son de tipo number ej: v-model.number, enlace de datos doble es decir recibe la informacion que se envia desde cualquier input o cualquier otro campo
     3. v-text: sirve para mostrar texto dentro de cualquier elemento del html, y este almacenado en data, es lo mismo que hacer una interpolación {{es recomendado de esta forma}}
     4. v-html: muestra cadenas de html que esten en una variable y se puede mostrar en la vista
     5. v-if: elimina el elemento del DOM, es una condición 
@@ -22,8 +22,21 @@ Eventos Vue.js
   1. v-on: se implementa mediante @click es un ejemplo y llama una funcion en metodos, existen distintos metodos que se pueden ver en la documentación
   2. Pasar argumentos: mediante los eventos podemos pasar argumentos , como por ejemplo: @click="alert('mensaje de prueba') y la funcion en los metodos seria (mensaje) => {alert(mensaje)} de esta forma pasamos argumentos o parametros a nuestros metodos y funciones.
   3. Objeto event: cualquier funcion que se este creando tiene por defecto un parametro que se llama evento, el cual es enviado por vue.js y lo podemos usar
+  4. se puede usar mas de un evento en cualquier div. 
 
 
+
+Estructura de vue 
+
+new Vue({
+    el: '#app', este hace referencia en donde se va a trabajar con vue.js
+    data: {
+      este hace referencia a las variables con las que se va a trabajar 
+    }, 
+    methods: {
+        este hace referentcia a los metodos los cuales se va a trabajar
+    },
+})
 
 UTILIZAR ROUTER LINK EN VUE.JS
 
