@@ -38,21 +38,21 @@ new Vue({
     },
 })
 
-UTILIZAR ROUTER LINK EN VUE.JS
-
-- Para usar router debemos seguir los siguientes pasos, para crear adecuadamente nuestra vista y enrulara con lazy routes:
-1. En router.js debemos crear la siguiente estructura
-    {
-      path: '/servicios',
-      name: 'servicios',
-      component: () => import(/* webpackChunkName: "about" */ './views/	nombre.vue
-    }
-2. Crear nuestra vista en views.
-3. En App.vue debemos colocar la etiqueta <router-view/> y si tenemos algún nabab o algo parecido debemos colocar <router-link to=“path”></router-link>
-
+<h1>Componentes Vue.js</h1>
 
 Crear componentes:
 1. Crear el archivo con el template y el script
+
+Vue.component('nombre del componente',{
+  template: 'aca es donde va el HTML',
+  data: function(){
+    //retorna esta función los objetos 
+    return {
+      titulo: 'aca estan los datos'
+    }
+    no usamos data como objeto si no como una función
+  }
+})
 2. Importar el componente en app.vue
 3. Agregarlo en el template ej <cabecera></cabecera>
 
@@ -68,3 +68,25 @@ Cuando traemos una imagen y la queremos llamar con src le podemos poner @/assets
 
 - Recordemos usar store en donde se almacena toda la informacion 
 - con mapactions podemos llamar la funcion y poderla usar en la vista
+
+<h2>Instalación de CLI</h2>
+
+npm install --global vue-cli
+vue use 'nombre de la plantilla' 'nombre del proyecto'
+
+<h3>Estructura de Vue.js</h3>
+
+
+UTILIZAR ROUTER LINK EN VUE.JS
+
+- Para usar router debemos seguir los siguientes pasos, para crear adecuadamente nuestra vista y enrulara con lazy routes:
+1. En router.js debemos crear la siguiente estructura
+    {
+      path: '/servicios',
+      name: 'servicios',
+      component: () => import(/* webpackChunkName: "about" */ './views/	nombre.vue
+    }
+2. Crear nuestra vista en views.
+3. En App.vue debemos colocar la etiqueta <router-view/> y si tenemos algún nabab o algo parecido debemos colocar <router-link to=“path”></router-link>
+
+
