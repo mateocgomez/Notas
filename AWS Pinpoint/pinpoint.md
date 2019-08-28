@@ -32,6 +32,8 @@ Despues de segmentarlos, se debe escoger la forma en la que se van a comunicar e
 Las campañas se usan para enviar mensajes agendados, pueden ser campañas recurrentes por dia, semana o como lo quiera programar.
 Se pueden liminar la cantidad de mensajes que el usuario va a recibir por dia, por campaña o cuantas campañas van a recibir, las campañas se pueden guardar en templates
 
+En las campañas se puede especificar la hora el dia y demas que queremos lanzar las campañas, como bien una campaña es para agendar el bombardeo de información
+
 ## Usuarios o endpoints
 
 Los usuarios no reciben los mensajes, son sus dispositivos los que reciben los mensajes y a estos se les denomina endpoint 
@@ -59,4 +61,19 @@ Las campañas son usadas para enviar mensajes en canales a endpoints y segmentos
 1. Para crear una campaña se necesita un nombre
 2. Existen dos tipos de campaña , estandar campaña es la cual se puede enviar un mensaje para todos los endpoints que se pueda enviar ese mensaje , por ejemplo si hago un envio de correo y algunos de esos segmentos son push notification no va a servir
 3. A/B test campaña sirve para crear multiples mensajes para comprar rendimiento y enelitica
+
+
+## GRAFICAS DE ANALITICA
+
+
+Estas graficas muestran principalmente los endpoints activos, las sesiones de metricas y las autenticaciones de las metricas
+Todas esta informacion se puede descargar en un csv y poder mirar como va la información que se esta procesando.
+
+### ANÁLISIS DE EMBUDO
+
+Estas sirven para controlar embudos o filtros que ayuden a mirar mejor los atributos de distintas graficas y de esta formar revisar cuales son satisfactorias o no son tan satisfactorios.
+
+####Metricas en CloudWatch
+
+Todas las metricas se ven en cloudwatch, como normalmente se monitorea todos los servicios de AWS
 

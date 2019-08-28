@@ -1,0 +1,57 @@
+Instrucciones por default
+
+Seguir los pasos de Instalando el servicio en raspberry.
+
+Tener presente que se debe trabajar con Raspberry Strech
+
+Tener una cuenta de Amazon 
+
+Usar SD Card Formatter para formatear las memorias del raspberry, o formatearlos desde el manejador de discos de MacOS
+
+Usar balenaEtcher para poder crear la imagen y formatear el disco
+
+Instrucciones para Snowboy
+
+Clonar el repositorio de Snowboy  
+
+Copiar el archivo que se encuentra en el repositorio en el siguiente path:
+
+cd /home/po 
+cp /Documents/snowboy/resource/alexa/alexa-avs-sample-app/avs-kittai.patch ./
+
+3. Parchar los archivos setup.sh & pi.sh, con el comando
+
+patch < avs-kittai.patch
+
+4. Modificar el archivo setup.sh una vez parchado en la linea de BUID por BUILD
+
+5. Mover la carpeta build a temporales
+
+6. Compilar nuevamente con el comando
+
+sudo bash setup.sh config.json
+
+Tener en cuenta que se debe verificar que ya no compila con Sensory, si no con kitt.ai, si  clona y empieza la compilación con este programa significa que se han realizado los pasos correctamente.
+
+7. Copiar el modelo personal a la siguiente ruta:
+
+cp clarita.pmdl /home/pi/third-party/snowboy/resources/
+
+8. Modificar el archivo los siguientes parámetros:
+
+/home/pi/avs-device-sdk/blob/master/KWD/KWDProvider/src/KeywordDetectorProvider.cpp
+KITT_AI_SENSITIVITY linea 26 a una sensibilidad acorde a lo que se necesite puede variar de acuerdo al modelo
+KITT_AI_APPLY_FRONT_END_PROCESSING cambiarlo a false
+
+9. Una vez modificado el archivo se debe volver a compilar.
+
+10. Ejecutar y probar.
+
+ISSUES
+
+Puede que en algunas ocasiones no funcione o no compile debido a errores en el audio o errores en el bluetooth, es recomendable que estas estén activas en el proceso de la compilación, si en algún momento saca error en cuanto al audio, hacer el siguiente procedimiento:
+
+Tomar del repositorio de avs-sdk la carpeta de portaudio
+
+Sustituir en nuestro escritorio 
+
