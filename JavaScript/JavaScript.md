@@ -65,3 +65,60 @@ Mediante esta forma es recomendable recorrer un arreglo
 })
 
 ```
+
+### Template Strings
+
+Para ecmascript `${nombre variable}` mediante este simbolo estamos indicando que podemos escribir codigo y concatenar con template strings
+
+### Funciones flechas
+
+Si recibe un solo parametro se le pueden quitar los parentisis
+```js
+let viajando = (destino) => {
+  return `Viajando a la ciudad de: ${destino}`
+}
+
+let viaje = viajando('Paris');
+
+console.log(viaje);
+```
+
+
+### Objeto constructor
+Son aquellos objetos que tienen el this.nombre o this.apellido , implementando mediante los this.
+
+### Prototipo
+Para agregar un prototype se realiza de la siguiente forma, prototipo permite atar funciones a un objeto
+```js
+Tarea.prototype.mostrarinformacion = function(){
+
+}
+```
+
+### Object destructuring
+Es extraer valores de un objeto
+
+- la palabra de la variable se crea de acuerdo a lo que vaya de la palabra del objeto
+```js
+const aprendiendoJS = {
+    version: {
+        nueva: 'ES6',
+        anterior: 'ES5'
+    },
+    frameworkrs: ['REACT', 'VUEJS', 'ANGULAR']
+}
+    let {anterior} = aprendiendoJS.version;
+```
+### literal enhancement
+
+Creación de nuevos objetos
+```js
+const banda = 'Muse';
+const genero = 'Alternative';
+const canciones = ['Cydonia', 'Workr', 'LMFAO'];
+
+//Para unir todas estas variables en un objeto con la nueva forma de ES6
+const metallica = {banda, genero, canciones};
+console.log(metallica);
+```
+De esta forma se une todas las variables en un objeto
