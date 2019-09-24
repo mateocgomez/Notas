@@ -10,6 +10,13 @@ Su ecosistema es el siguiente :
 - React Native: Interfaces de aplicaciones mobiles
 - Next.js: framework en el servidor
 
+
+## Creat react app
+
+Evita configurar webpack y babel
+1. Tener instalado node.js
+2. En el github esta el creat react app https://github.com/facebook/create-react-app
+
 ## Compartir codigo amigablemente mediante:
 - https://carbon.now.sh/
 - https://gist.github.com/
@@ -19,3 +26,4 @@ Su ecosistema es el siguiente :
 - reactjs code snippets
 - generate-react-component
 - prettier - code formatter
+
