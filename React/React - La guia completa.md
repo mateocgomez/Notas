@@ -87,6 +87,16 @@ const Header = ({titulo}) => {
 - Son metodos o funciones que se ejecutan automaticamente en el componente.
 - Solo existen en Class Components
 
+
+## Formas de escribir codigo React
+
+1. Clases y props
+2. Context API
+3. React hooks -> permite hacer mucho con poco codigo
+4. Redux 
+
+Todas se pueden mezclar, cualquier forma de escribir react
+
 ### Mas comunes
 1. Componentdodmount -> el documento esta listo , es para llamado de api's
 
@@ -98,6 +108,16 @@ const Header = ({titulo}) => {
 
 5. Mediante set state se puede hacer el llamado de los this.setState
 
+6. Para setear con el this.setState en cualquier objeto se usa el e.target.name -> valor del objeto y con el e.target.value -> el valor que tenga el input
+
+7. De esta forma se setea el state 
+```js
+...this.state.cita,
+```
+
+
+## Información importante
+Para guardar información se debe almacenar en el localstorage
 ## Compartir codigo amigablemente mediante:
 - https://carbon.now.sh/
 - https://gist.github.com/

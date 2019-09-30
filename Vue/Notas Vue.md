@@ -1,4 +1,4 @@
-
+# Vue.js
 
 <h1>Directivas Vue.js</h1>
 
@@ -74,7 +74,11 @@ Cuando traemos una imagen y la queremos llamar con src le podemos poner @/assets
 npm install --global vue-cli
 vue use 'nombre de la plantilla' 'nombre del proyecto'
 
-<h3>Estructura de Vue.js</h3>
+### Estructura de Vue.js
+
+1. Babel es el transpilador o a traudcir codigo de la ultima versión de javascript a una versión mas antigua que pueden leer todos los navegadores
+
+2. Index.html es el punto de encuentro del html
 
 
 UTILIZAR ROUTER LINK EN VUE.JS
@@ -90,3 +94,19 @@ UTILIZAR ROUTER LINK EN VUE.JS
 3. En App.vue debemos colocar la etiqueta <router-view/> y si tenemos algún nabab o algo parecido debemos colocar <router-link to=“path”></router-link>
 
 
+### Componentes
+
+En export default llamamos los componentes que se esten usando y de esta forma ya se puede usar el componente, ademas de esto toca importarlo
+
+```js
+
+import titulo from './components/Titulo.vue'
+
+export default {
+  components: {
+    titulo
+  }
+
+}
+
+´´´
