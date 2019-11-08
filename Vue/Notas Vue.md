@@ -109,4 +109,12 @@ export default {
 
 }
 
-´´´
+```
+
+### Redirigir a otra pagina
+
+Para redirigir a otra pagina se implementa mediante el codigo 
+```js
+    this.$router.push({name: 'LOGIN'});
+```
+
