@@ -111,36 +111,10 @@ export default {
 
 ```
 
-Mediante props en el componente en el cual se le va enviar la información podemos pasar la información.
-Props puede ser un arreglo o un objeto y dentro de ese objeto puede tener 
+### Redirigir a otra pagina
 
-
-### Pasar información al componente padre
-
-Se pasan mediante eventos como por ejemplo this.$emit('se pasa lo que queremos enviar', 'algun parametro')
-y despues tenemos que ir al componente padre que escuche el evento que estamos pasando 
-
-### Bus de datos
-se va al main.js 
+Para redirigir a otra pagina se implementa mediante el codigo 
 ```js
-export var bus = new Vue()
-```
-Se importa en el componente que queremos usar y llamamos al bus con un evento también
-```js
-bus.$emit('nombre del evento', parametro que pasamos)
-```
-para escuchar el evento
-```js
-bus.$on('nombre del contador', funcion que se hace)
+    this.$router.push({name: 'LOGIN'});
 ```
 
-### Compartir metodos entre componentes
-```js
-export var bus = new Vue({
-  methods:{
-    nombredelMetodo(){
-      this.$emit('como queremos que se llame el metodo a invocar', parametro que le pasamos);
-    }
-  }
-})
-```
