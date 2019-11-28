@@ -10,3 +10,7 @@
 
 1. amplify add hosting
 2. amplify publish 
+
+## Añadir o actualizar algo en algun api, storage o demas
+
+1. Implementar la opción amplify update api ( o lo queramos solucionar )

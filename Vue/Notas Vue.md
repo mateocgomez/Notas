@@ -154,3 +154,22 @@ Para redirigir a otra pagina se implementa mediante el codigo
     this.$router.push({name: 'LOGIN'});
 ```
 
+### Slots
+
+Sirven para transferir información y no tener que duplicar o crear mas componentes cuando ya existen.
+
+Con la etiqueta slot puedo pasar información <slot></slot> mediante esta etiqueta lo que haces es pasar todo el bloque al componente
+
+#### ¿Como usar el componente y usar una sola sección sin usar todo el bloque?
+
+Con la etiqueta slot pongo las secciónes que necesito para poder diferenciar las secciones que necesitamos, mediante la siguiente forma:
+
+
+
+```js
+Esto es para el componente principal nombrando el slot que quiero apuntar
+<slot="titulo">Hola Mundo!</slot>
+Esto es para el componente que lo recibe y muestra la información de esos elementos
+<slot name="titulo"></slot>
+```
+
