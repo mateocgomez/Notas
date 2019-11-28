@@ -73,7 +73,7 @@ Todas esta informacion se puede descargar en un csv y poder mirar como va la inf
 
 Estas sirven para controlar embudos o filtros que ayuden a mirar mejor los atributos de distintas graficas y de esta formar revisar cuales son satisfactorias o no son tan satisfactorios.
 
-####Metricas en CloudWatch
+#### Metricas en CloudWatch
 
 Todas las metricas se ven en cloudwatch, como normalmente se monitorea todos los servicios de AWS
 
