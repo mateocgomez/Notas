@@ -6,7 +6,7 @@
     2. v-model : permite una connexion directa entre un dato  , le podemos poner a los v-model que son de tipo number ej: v-model.number, enlace de datos doble es decir recibe la informacion que se envia desde cualquier input o cualquier otro campo
     3. v-text: sirve para mostrar texto dentro de cualquier elemento del html, y este almacenado en data, es lo mismo que hacer una interpolación {{es recomendado de esta forma}}
     4. v-html: muestra cadenas de html que esten en una variable y se puede mostrar en la vista
-    5. v-if: elimina el elemento del DOM, es una condición 
+    5. v-if: elimina el elemento del DOM, es una condición
     5. v-else: sirve con el condicional de v-if
     6. Etiqueta <template></template>: es una etiqueta de HTML5 y sirve para no ser mostrada en el DOM!, y de esta forma podemos agrupar elementos con v-if sin necesidad de implementar un div
     7. v-else-if: como su nombre lo dice, anidada las condiciones para poder usar distintos condicionales
@@ -16,49 +16,48 @@
     11. template con v-for: mediante template evitamos que se creen otras etiquetas en el DOM.
     12. v-for con objetos: mediante v-for="(valor, llave) in empleado" mediante la opcion de llave podemos mostrar los atributos y los valores que tiene el objeto.
 
+Eventos Vue.js
 
-Eventos Vue.js 
+1. v-on: se implementa mediante @click es un ejemplo y llama una funcion en metodos, existen distintos metodos que se pueden ver en la documentación
+2. Pasar argumentos: mediante los eventos podemos pasar argumentos , como por ejemplo: @click="alert('mensaje de prueba') y la funcion en los metodos seria (mensaje) => {alert(mensaje)} de esta forma pasamos argumentos o parametros a nuestros metodos y funciones.
+3. Objeto event: cualquier funcion que se este creando tiene por defecto un parametro que se llama evento, el cual es enviado por vue.js y lo podemos usar
+4. se puede usar mas de un evento en cualquier div.
 
-  1. v-on: se implementa mediante @click es un ejemplo y llama una funcion en metodos, existen distintos metodos que se pueden ver en la documentación
-  2. Pasar argumentos: mediante los eventos podemos pasar argumentos , como por ejemplo: @click="alert('mensaje de prueba') y la funcion en los metodos seria (mensaje) => {alert(mensaje)} de esta forma pasamos argumentos o parametros a nuestros metodos y funciones.
-  3. Objeto event: cualquier funcion que se este creando tiene por defecto un parametro que se llama evento, el cual es enviado por vue.js y lo podemos usar
-  4. se puede usar mas de un evento en cualquier div. 
-
-
-
-Estructura de vue 
+Estructura de vue
 
 new Vue({
-    el: '#app', este hace referencia en donde se va a trabajar con vue.js
-    data: {
-      este hace referencia a las variables con las que se va a trabajar 
-    }, 
-    methods: {
-        este hace referentcia a los metodos los cuales se va a trabajar
-    },
+el: '#app', este hace referencia en donde se va a trabajar con vue.js
+data: {
+este hace referencia a las variables con las que se va a trabajar
+},
+methods: {
+este hace referentcia a los metodos los cuales se va a trabajar
+},
 })
 
 <h1>Componentes Vue.js</h1>
 
 Crear componentes:
+
 1. Crear el archivo con el template y el script
 
 Vue.component('nombre del componente',{
-  template: 'aca es donde va el HTML',
-  data: function(){
-    //retorna esta función los objetos 
-    return {
-      titulo: 'aca estan los datos'
-    }
-    no usamos data como objeto si no como una función
-  }
+template: 'aca es donde va el HTML',
+data: function(){
+//retorna esta función los objetos
+return {
+titulo: 'aca estan los datos'
+}
+no usamos data como objeto si no como una función
+}
 })
+
 2. Importar el componente en app.vue
 3. Agregarlo en el template ej <cabecera></cabecera>
 
-v-model -> permite una connexion directa entre un dato  , le podemos poner a los v-model que son de tipo number ej: v-model.number
+v-model -> permite una connexion directa entre un dato , le podemos poner a los v-model que son de tipo number ej: v-model.number
 
-Key Modifiers -> @keyup.enter -> sirve para darle interacción con cualquier 
+Key Modifiers -> @keyup.enter -> sirve para darle interacción con cualquier
 
 Computed -> son un arreglo y sirve para las operaciones
 
@@ -66,7 +65,7 @@ Computed -> son un arreglo y sirve para las operaciones
 
 Cuando traemos una imagen y la queremos llamar con src le podemos poner @/assets/logo.png el @ indica que estamos llamando desde la carpeta src
 
-- Recordemos usar store en donde se almacena toda la informacion 
+- Recordemos usar store en donde se almacena toda la informacion
 - con mapactions podemos llamar la funcion y poderla usar en la vista
 
 <h2>Instalación de CLI</h2>
@@ -80,62 +79,65 @@ vue use 'nombre de la plantilla' 'nombre del proyecto'
 
 2. Index.html es el punto de encuentro del html
 
-
 UTILIZAR ROUTER LINK EN VUE.JS
 
 - Para usar router debemos seguir los siguientes pasos, para crear adecuadamente nuestra vista y enrulara con lazy routes:
+
 1. En router.js debemos crear la siguiente estructura
-    {
-      path: '/servicios',
-      name: 'servicios',
-      component: () => import(/* webpackChunkName: "about" */ './views/	nombre.vue
-    }
+   {
+   path: '/servicios',
+   name: 'servicios',
+   component: () => import(/_ webpackChunkName: "about" _/ './views/ nombre.vue
+   }
 2. Crear nuestra vista en views.
 3. En App.vue debemos colocar la etiqueta <router-view/> y si tenemos algún nabab o algo parecido debemos colocar <router-link to=“path”></router-link>
-
 
 ### Componentes
 
 En export default llamamos los componentes que se esten usando y de esta forma ya se puede usar el componente, ademas de esto toca importarlo
 
 ```js
-
-import titulo from './components/Titulo.vue'
+import titulo from "./components/Titulo.vue";
 
 export default {
   components: {
     titulo
   }
-
-}
-
+};
 ```
 
 Mediante props en el componente en el cual se le va enviar la información podemos pasar la información.
-Props puede ser un arreglo o un objeto y dentro de ese objeto puede tener 
+Props puede ser un arreglo o un objeto y dentro de ese objeto puede tener
 
 ### Pasar información al componente padre
-Se pasan mediante eventos como por ejemplo this.$emit('se pasa lo que queremos enviar', 'algun parametro')
-y despues tenemos que ir al componente padre que escuche el evento que estamos pasando 
+
+Se pasan mediante eventos como por ejemplo this.\$emit('se pasa lo que queremos enviar', 'algun parametro')
+y despues tenemos que ir al componente padre que escuche el evento que estamos pasando
+
 ### Bus de datos
-se va al main.js 
+
+se va al main.js
 
 ```js
-export var bus = new Vue()
+export var bus = new Vue();
 ```
+
 Se importa en el componente que queremos usar y llamamos al bus con un evento también
+
 ```js
 bus.$emit('nombre del evento', parametro que pasamos)
 ```
+
 para escuchar el evento
+
 ```js
 bus.$on('nombre del contador', funcion que se hace)
 
 
 ```
 
-
 ### Compartir metodos entre componentes
+
 ```js
 export var bus = new Vue({
   methods:{
@@ -146,12 +148,12 @@ export var bus = new Vue({
 })
 ```
 
-
 ### Redirigir a otra pagina
 
-Para redirigir a otra pagina se implementa mediante el codigo 
+Para redirigir a otra pagina se implementa mediante el codigo
+
 ```js
-    this.$router.push({name: 'LOGIN'});
+this.$router.push({ name: "LOGIN" });
 ```
 
 ### Slots
@@ -164,8 +166,6 @@ Con la etiqueta slot puedo pasar información <slot></slot> mediante esta etique
 
 Con la etiqueta slot pongo las secciónes que necesito para poder diferenciar las secciones que necesitamos, mediante la siguiente forma:
 
-
-
 ```js
 Esto es para el componente principal nombrando el slot que quiero apuntar
 <slot="titulo">Hola Mundo!</slot>
@@ -173,3 +173,21 @@ Esto es para el componente que lo recibe y muestra la información de esos eleme
 <slot name="titulo"></slot>
 ```
 
+#### ¿Como puedo cambiar los estilos de los slots?
+
+Los slots se modifican sus estilos en el componente el cual recibe la información.
+
+- Slots por defecto: son aquellos slot que se ven como slots name
+
+#### Componentes dinamicos
+
+mediante un enlace de datos de la siguiente forma
+
+```js
+<keep-alive>
+<component :is = "componenteSeleccionado"></component>
+</keep-alive>
+El componente debe tener ser igual al slot que estamos llamando
+```
+
+-> Para evitar la destrucción del componente cuando intercambiemos entre distintos componentes dinamicos, podemos implementar la siguiente ETIQUETA keep-alive, mediante esto ya no llamaremos mas el ciclo de vida destoyed, si usamos keep alive el ciclo de vi se caera, si queremos seguir usando destroyed podemos usar la alternativa de activated(){} y deactivated(){}
