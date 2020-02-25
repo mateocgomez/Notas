@@ -125,3 +125,24 @@ Cuando uno para y comienza una instancia de EC2 esta cambia la ip publica, por l
 
 Solo se pueden tener 5 elastic ip en la cuenta y se pueden tener mas, es recomendable tratar de evitar las elastic ip, esto refleja decisiones de arquitectura pobres, y para una mejor resolución se una un balanceador de cargas y no se usa una ip publica.
 
+Cuando se apaga y se prende una maquina o se para en EC2 se cambia la ip publica pero se mantiene la ip prrivada pero para eso se usa la elastic ip.
+
+Para asignar una elastic ip se va, alojar nueva direccion y next y da una nueva, click derecho en la ip y asociar la direccion ip a una instancia, se selecciona la ip y se asocia y ya se le asigna esa elastic ip, cuando nos devolvemos a la instancia nos podemos dar cuenta que la ip publica se vuelve como un link y la ip publica se mantiene y no se pierde, esta persiste.
+
+Para quitarla click derecho en la instancia, networking y desasociar elastic ip y se quita automaticamente y la ip publica que teniamos antes ya no aparece
+
+### Lanzar un servidor apache en EC2
+
+Instalar apache web server para mostrar una pagina web
+Mostrar un index.html en la maquina de EC2
+```js
+1. Se corren los siguientes comandos sudo su para entrar como super usuario
+2. Se actualizan todos los paquetes con yum update -y
+3. instalamos yum install -y httpd.x86_64
+3. Se instala systemctl start httpd.service -> Para amazon linux 2
+4. systemctl enable httpd.service
+5. Si esta bien podemos ver curl localhost:80 esto hace cargar cualquier costa en ese localhost
+6. Si se queda haciendo timeout es error de security group por que no le hemos dado acceso en el puerto 80 para que pueda apuntar afuera
+7. Modificamos las reglas de entrada y decimos de tipo http puerto 80 y que permita todo en el security group.
+8. Ya tenemos nuestro servidor web arriba
+```
