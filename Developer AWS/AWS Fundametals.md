@@ -256,5 +256,109 @@ Cuando estas instancias son bursatiles significa que son en general y que su ren
 ### T2 Unlimited
 Sale en el 2017 y se pueden tener creditos de burst ilimiados, pagando un dinero extra y no se pierde el rendimiento de la cpu, si no se monitera adecuadamente los costos pueden ser bastantes costos
 
+## LOAD BALANCER
 
+Son servidores que reenvían el tráfico de Internet a múltiples servidores (EC2 Instances) de bajada.
+Repartir la carga entre múltiples instancias descendentes
+- Exponer un único punto de acceso (DNS) a su aplicación
+- Manejar sin problemas los fallos de las instancias descendentes 
+- Realizar comprobaciones regulares del estado de sus instancias 
+- Proporcionar terminación SSL (HTTPS) para sus sitios web 
+- Aplicar la adherencia con las cookies 
+- Alta disponibilidad en todas las zonas 
+- Separar el tráfico público del privado
 
+ELB -> ELASTIC LOAD BALANCER , aws proporciona su propio balanceador de cargas y garantiza que trabaje eficientemente y no con un balanceador de cargas que quiera implementar usted mismo, garantiza el mantenimiento las actualizaciones y la alta disponibilidad.
+
+Existen 3 tipos de ELB en AWS
+1. Classic load balancer -> v1 lanzado en 2009
+2. Application load balancer -> de los nuevos balanceadores de carga v2 lanzado despues del 2016
+3.Network load balancer -> de los nuevos balanceadores de carga v2 lanzado despues del 2017
+
+Recomendado por amazon usar la nueva generación de los balanceadores de carga, Amazon también deja configurar los ELB privados o publicos.
+
+### Health Checks
+
+- Los controles de salud son cruciales para los equilibradores de carga
+- Permiten que el equilibrador de carga sepa si los casos que se presentan reenvían el tráfico a
+están disponibles para responder a las solicitudes
+- El chequeo médico se hace en un puerto y una ruta (/salud es común)
+- Si la respuesta no es 200 (OK), entonces la instancia no es saludable
+
+### Application load balancer
+
+- Los equilibradores de carga de aplicación (Capa 7) permiten hacer:
+- Equilibrar la carga de múltiples aplicaciones HTTP entre máquinas (grupos objetivo)
+- Balanceo de carga para múltiples aplicaciones en la misma máquina (ex: contenedores)
+- Equilibrio de carga basado en la ruta en la URL
+- Equilibrio de carga basado en el nombre del host en la URL
+- Básicamente, son increíbles para los micro servicios y las aplicaciones basadas en contenedores.
+(ejemplo: Docker & Amazon ECS)
+- Tiene una función de mapeo de puertos para redirigir a un puerto dinámico
+- En comparación, necesitaríamos crear un equilibrador de carga clásico por
+solicitud antes. ¡Eso era muy caro e ineficiente!
+
+- La adherencia puede activarse a nivel del grupo objetivo
+- La misma petición va a la misma instancia
+- La adherencia es generada directamente por el ALB (no la aplicación)
+- ALB soporta los protocolos HTTP/HTTPS y Websockets
+- Los servidores de aplicación no ven la IP del cliente directamente
+- La verdadera IP del cliente se inserta en la cabecera X-Forwarded-For
+- También podemos obtener Puerto (X-Forwarded-Port) y proto (X-Forwarded-Proto)
+
+EC2 nunca ve la ip privada de la instancia 
+
+### Network load balancer
+
+- Los equilibradores de carga de la red (Capa 4) permiten hacer:
+- Reenviar el tráfico TCP a sus instancias
+- Manejar millones de solicitudes por segundos
+- Soporte para IP estática o IP elástica
+- Menos latencia ~100 ms (vs 400 ms para ALB)
+- Los equilibradores de carga de la red se utilizan principalmente para el rendimiento extremo y no debería ser el equilibrador de carga que elija por defecto
+- En general, el proceso de creación es el mismo que el de los equilibradores de carga de la aplicación
+
+### IMPORTANTE 
+
+1. Los balanceadores de carga clasicos estan obsoletos
+- ALB para HTTP/HTTPS Y WEBSOCKETS
+- NLB para TCP
+2. CLB y ALB soporta SSL cerificados y proveen terminación SSL
+3. Todos los ELB tienen la capacidad de health checj
+4. ALB puede rutear en un hostname/path
+4. ALB es perfecto para DOCKER
+5. Cualquier ELB tiene una static host name
+6. ELB se puede escalar pero no instantaneamente se debe contactar a AWS
+7. NLB ve el cliente directamente
+8. errores 4xx son por el cliente
+9. errores 5xx son de aplicaciones
+    - error 503 de capacidad o no tiene un objetivo registrado
+Si los ELB no pueden conectar a la aplicación se deben revisar los security group
+
+En la creacion de un balanceador de cargas el schema puede ser de dos tipos:
+1. internet-facing -> para cuando la aplicacion va para internet y va a ser publica
+2. internal -> cuando la aplicacion va a ser internet
+
+## Auto Scaling Group (ASG)
+- En la vida real, la carga de sus sitios web y aplicaciones puede cambiar
+- En la nube, puedes crear y deshacerte de los servidores muy rápidamente
+- El objetivo de un Grupo de Auto Escala (ASG) es:
+- Escalar (agregar instancias de EC2) para igualar una carga incrementada
+- Escala en (quitar los casos de EC2) para que coincida con una carga disminuida
+- Asegúrate de que tenemos un mínimo y un máximo de máquinas funcionando
+- Registrar automáticamente nuevas instancias a un balanceador de carga
+
+### Configuración ASG
+Que se necita para configurar un ASG
+AMI + TIPO DE INSTANCIA
+EC2 User Data
+EBS Volumnes
+Security Groups
+SSH Key Pair
+Min & max & initial size
+Network + subnets 
+Balanceador de cargar
+Politicas de escalamiento
+
+### Auto Scaling Alarms
+1. Se puede escalar mediante alarmas de CloudWatch
