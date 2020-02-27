@@ -135,7 +135,7 @@ Para quitarla click derecho en la instancia, networking y desasociar elastic ip 
 
 Instalar apache web server para mostrar una pagina web
 Mostrar un index.html en la maquina de EC2
-```js
+```sh
 1. Se corren los siguientes comandos sudo su para entrar como super usuario
 2. Se actualizan todos los paquetes con yum update -y
 3. instalamos yum install -y httpd.x86_64
@@ -146,3 +146,66 @@ Mostrar un index.html en la maquina de EC2
 7. Modificamos las reglas de entrada y decimos de tipo http puerto 80 y que permita todo en el security group.
 8. Ya tenemos nuestro servidor web arriba
 ```
+
+### ec2 user data
+Se puede crear un script para que cada vez que se lanze la maquina se lanzen estos scriopt mediante el ec2 user data, para este ejemplo se creara un bootstrap que se llama o scripty se asegure de tener instalado apache http server instalado correctamente.
+
+Para configurar el USER DATA se lanza la instancia y en configuracion y detalles de la instancia en la pestaña de detalles avanzados esta un campo que se llama USER DATA , en esa seccion es donde va el script
+Este es un script para mantener actualizado el servidor y poder mantenerle apache iniciado e instalado correctamente, estos scripts siempre corren en sudo
+```sh
+#!/bin/bash
+# install httpd(Linux 2 version)
+yum update -y
+yum install -y httpd.x86_64
+systemctl start httpd.service
+systemctl enable httpd.service
+echo "Hello World for Workr.r" > /var/www/html/index.html
+```
+
+
+### ec2 instance launch types
+1. Instancias en demanda -> pequeñas cargas de tragajo
+2. Instancias reservadas: trabajos largos y se reserva mayor a un año
+3. Convertible reserved instances: puedes ser instancias flexibles
+4. reserved scheduled: reservadas para una semana o un dia
+5. spot instances: pequeñas cargas de trajo
+6. dedicated instances: ningun otro cliente va a tener tu hardware
+7. dedicated hosts: servidor fisico control de la instancia en el lugar
+
+### ec2 on demand
+1. se paga por el uso cobro por segundo despues del primer minuto
+2. tiene el costo mas alto pero no tiene pago por adelantado
+3. no tiene compromiso a largo plazo
+3. Recomendado para cargas de trabajo a corto plazo e ininterrumpidas, donde no se puede predecir cómo se comportará la aplicación.
+
+### EC2 Reserved Instances
+
+Hasta un 75% de descuento en comparación con la demanda
+- Paga por adelantado lo que usas con un compromiso a largo plazo
+- El período de reserva puede ser de 1 o 3 años
+- Reservar un tipo de instancia específica
+- Recomendado para aplicaciones de uso en estado estacionario (base de datos think)
+- Convertible Reservado Instancia - puede cambiar el tipo de instancia EC2 - Hasta un 54% de descuento
+- Instancias reservadas programadas
+- lanzamiento dentro de la ventana de tiempo que usted reserva
+- Cuando se requiere una fracción del día / semana / mes
+
+### EC2 Spot Instances Instancias puntuales
+
+Puede obtener un descuento de hasta el 90% comparado con el de la demanda
+- Pides un precio y obtienes la instancia siempre y cuando esté por debajo del precio
+- El precio varía según la oferta y la demanda
+- Las instancias de spot son reclamadas con una notificación de 2 minutos de aviso cuando el precio spot sube por encima de su oferta.
+- Se utiliza para trabajos por lotes, análisis de grandes datos o cargas de trabajo que son resistentes a los fallos.
+- No es muy bueno para trabajos críticos o bases de datos
+
+### EC2 Dedicated Hosts
+
+- Servidor físico dedicado de EC2 para su uso
+- Control total de la colocación de la instancia EC2
+- Visibilidad en los enchufes subyacentes / núcleos físicos del hardware
+- Asignado para su cuenta para una reserva de 3 años
+- Más caro
+- Útil para el software que tiene un modelo de licencia complicado (BYOL - Bring Your Own License)
+- O para las empresas que tienen fuertes necesidades de regulación o de cumplimiento
+
