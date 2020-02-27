@@ -209,3 +209,52 @@ Puede obtener un descuento de hasta el 90% comparado con el de la demanda
 - Útil para el software que tiene un modelo de licencia complicado (BYOL - Bring Your Own License)
 - O para las empresas que tienen fuertes necesidades de regulación o de cumplimiento
 
+
+### EC2 Dedicated Instances
+- Instancias que se ejecutan en un hardware dedicado a ti
+- Puede compartir el hardware con otras instancias en la misma cuenta
+- No hay control sobre la colocación de la instancia (puede mover el hardware después de Stop / Start)
+
+
+### EC2 Pricing
+
+- Los precios de las instancias de EC2 (por hora) varían en función de estos parámetros: 
+- La región en la que estás
+- Tipo de instancia que estás usando
+- A la carta vs. Al contado vs. Reservado vs. Anfitrión dedicado
+- Linux vs. Windows vs. Sistema Operativo Privado (RHEL, SLES, Windows SQL)
+- Se le factura por segundos, con un mínimo de 60 segundos.
+- También pagas por otros factores como el almacenamiento, la transferencia de datos, las direcciones IP públicas fijas, el balanceo de carga
+- No se paga por la instancia si la instancia se detiene
+
+### AMI
+
+Sirve para crear tus propias imagenes, es decir una imagen para crear nuestras instancias, se pueden crear para windows o linux.
+
+El uso de un IAM construido a medida puede proporcionar las siguientes ventajas: 
+- Se necesitan paquetes preinstalados
+- Un tiempo de arranque más rápido (no hay necesidad de largos datos de usuario ec2 en el momento del arranque)
+- La máquina viene configurada con un software de monitoreo y de empresa
+- Preocupaciones de seguridad - control sobre las máquinas de la red
+- Control de mantenimiento y actualizaciones de los IAM a lo largo del tiempo
+- Integración del Directorio Activo fuera de la caja
+- Instalar su aplicación con antelación (para un despliegue más rápido cuando la escala automática)
+- Usando el AMI de otra persona que está optimizado para ejecutar una aplicación, DB, etc...
+- Los AMI están construidos para una región específica de AWS (!)
+
+
+### Nomenclautura de las instancias
+
+• R/C/P/G/H/X/I/F/Z/CR are specialised in RAM, CPU, I/O, Network, GPU
+• M instance types are balanced
+• T2/T3 instance types are “burstable”
+
+### Burstable Instances (T2)
+
+Cuando estas instancias son bursatiles significa que son en general y que su rendimiento de cpu esta bien, pueden manejar picos de carga de trabajo usando creditos de burst
+
+### T2 Unlimited
+Sale en el 2017 y se pueden tener creditos de burst ilimiados, pagando un dinero extra y no se pierde el rendimiento de la cpu, si no se monitera adecuadamente los costos pueden ser bastantes costos
+
+
+
