@@ -362,3 +362,97 @@ Politicas de escalamiento
 
 ### Auto Scaling Alarms
 1. Se puede escalar mediante alarmas de CloudWatch
+
+c
+Se pueden definir nuevas reglas de autoescalamiento por EC2
+-> Numero de requerimientos de la ELB por instancia
+-> Promedio CPU de uso
+-> Promedio de entrada de red
+-> Promedio de entrada de salida
+
+
+### Auto Scaling Custom Metric
+-> Se puede escalar basado en metricas custom por ejemplo numero de conexiones por usuario
+
+
+### ASG Brain dump
+
+- Las políticas de escalamiento pueden ser en la CPU, la Red... e incluso pueden ser en métricas personalizadas o basadas en un horario (si conoces los patrones de tus visitantes)
+- Los ASGs usan configuraciones de lanzamiento y se actualiza un ASG proporcionando una nueva configuración de lanzamiento
+- Los roles IAM asignados a un ASG se asignarán a las instancias del EC2
+- Los ASG son gratuitos. Pagas por los recursos subyacentes que se lanzan
+- Tener instancias bajo un ASG significa que si se terminan por cualquier razón, el ASG las reiniciará. ¡Seguridad extra!
+- El ASG puede terminar las instancias marcadas como insalubres por un LB (y por lo tanto reemplazarlas)
+
+### EBS Volume (Elastic Block Store)
+
+- Una máquina EC2 pierde su volumen de raíz (unidad principal) cuando se termina manualmente.
+- Pueden ocurrir terminaciones inesperadas de vez en cuando (AWS le enviaría un correo electrónico)
+- A veces, necesitas una forma de almacenar los datos de tu instancia en algún lugar
+- Un volumen EBS (Elastic Block Store) es una unidad de red que puedes conectar
+ a sus instancias mientras corren
+- Permite que sus instancias persistan los datos
+- Almacena los datos si se llega a perder alguna información
+- Es un disco duro en la red no es un disco duro fisico.
+- Este usa la comunicacion de la red para comunicarse con la instancia, esto quiere decir que va a ver un poco de latencia.
+- Este permite quitarse de una EC2 y conectarse a otra rapidamente.
+- Se establece en una sola az
+- Es decir que no puede estar en us-east-1 a us-east-1b
+- Para mover un volumen de un lado a otro se necesita tomar un snapshot a este.
+- Tiene una capacidad provisionada
+- Uno puede incrementar la capacidad del disco durante el tiempo
+
+### Tipos de volumenes de EBS
+
+-> Los volumenes de EBS vienen en 4 tipos
+1. GP2 (SSD): PROPOSITOS generales buenos precios, rndimiento
+2. IOI: remdimiento alto, baja latencia y grandes cargas de trabajo
+3. STI: bajo costo ya que los volumenes de discos son HDD
+4. SCI: bajo costo 
+
+Tiene la caracteristica de que se puede por tamaño, ips
+
+Se pueden aumentar los volumenes, como el tamaño los iops y despues de aumentarlos se puede repartir
+
+### EBS Snapshots
+- Un volumen de ebs se puede realizar el backend mediante snapshots
+- Los snapshots solo puede tomar el espacio actual en el volumen
+- Solo toma el snapshot que se este usando
+- Sirve para backups, migraciones, encriptar una unidad, cambiar el tipo de unidad, aumentar el tamaño
+
+### EBS Encryption
+
+Cuando se crea una EBS encriptada:
+    1. Los datos encriptados se meten dentro del volumen
+    2. Todos los datos que entren o salgan seran encriptados
+    3. Todos los snapshots tambien seran encriptados
+    4. Todos los volumenes creados para el snapshot
+La encripcion y descripcion es transparente
+La encripcion tiene un minimo impacto en la latencia
+La encriptacion usa las llaves de KMS
+Cuando se copia un snapshot sin encriptacion permite la encriptacion
+
+### EBS vs Instance Store
+
+Alguna instancia no viene con ROOT EBS volumenes
+Ellos vienen con Instance Store
+Instance store viene con la maquina
+Pros: Mejor I/O 
+Cons: 
+- Cuando se apaga, el instance store se pierde
+- No se puede cambiar el tamaño del instance store
+- Backups son operados por el usuario.
+
+EBS Solo puede ser metida en una instancia al tiempo
+EBS esta bloqueada por la AZ nivel
+Para hacer migraciones de EBS de un AZ tiene que tener un snapshot para luego poder hacer el otro 
+EBS backups solo usan io
+
+## Route 53
+Route 53 se manega por los DNS
+El DNS es una colección de reglas y registros que ayuda a los clientes a entender cómo llegar a un servidor a través de las URL.
+Los registros mas comunes son : 
+• A: URL to IPv4
+• AAAA: URL to IPv6
+• CNAME: URL to URL
+• Alias: URL to AWS resource.
