@@ -449,10 +449,13 @@ Para hacer migraciones de EBS de un AZ tiene que tener un snapshot para luego po
 EBS backups solo usan io
 
 ## Route 53
-Route 53 se manega por los DNS
+Route 53 se maneja por los DNS
 El DNS es una colección de reglas y registros que ayuda a los clientes a entender cómo llegar a un servidor a través de las URL.
 Los registros mas comunes son : 
 • A: URL to IPv4
 • AAAA: URL to IPv6
 • CNAME: URL to URL
 • Alias: URL to AWS resource.
+
+Route 53 sirve con dominios propios o privados y resolverlos con una vpc, tiene load balancy, health checks, routing policy
+Tambien se puede usar CNAME
