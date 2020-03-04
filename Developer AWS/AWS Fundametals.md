@@ -459,3 +459,21 @@ Los registros mas comunes son :
 
 Route 53 sirve con dominios propios o privados y resolverlos con una vpc, tiene load balancy, health checks, routing policy
 Tambien se puede usar CNAME
+
+## RDS (Relational Database Service)
+Para bases de datos relacionales y permite crear bases de datos en la nube manejadas por AWS, Aurora es para base de datos relacionales propiedad de AWS
+
+Ventajas de usar RDS y no desplegar una base de datos con EC2
+- Se puede crear backups y restaurar en un timestamp en especifico
+- Dashboards de monitoreo
+- Replicas de lectura para mejorar el rendimiento de lectura
+. Multi AZ para recuperar en un desastre
+- Ventana de mantenimiento para actualizaciones
+- Capacidad de escalado tanto vertical como horizonal
+- La unica desventaja es que no tiene conexcion ssh para las instancias
+
+Leer Réplicas para la escalabilidad de lectura 
+Cuando se necesita mas potencia en la lectura de datos se pueden hacer hasta 5 replicas de lectura de esta forma mejor el rendimiento de la lectura en la base de datos, replicando en AZ y es de forma asyncrono entonces lee constantemente y menos delay y tiempos de espera.
+
+Multi AZ -> sirve cuando pasa recuperacion de desastres
+Replicacion sincronica
