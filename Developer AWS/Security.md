@@ -79,6 +79,18 @@ o traer todos los recursos sean de dev y de prod
 
 aws ssm get-parameters-by-path --path /myapp/dev --recursive
 
+Se pueden monitar las API mediante CLOUDTRAIL 
+
+
+Como las politicas son evaluadas?
+1. Si hay un NEGADO explícito, termina la decisión y NEGA
+2. Si hay un PERMISO, termina la decisión con PERMISO
+3. Else DENY
+
+
+Policies Dynamic
+
+Permiten usar policies para cualquier usuario y sea dinamico de esta forma
 ## Temas del examen
 1. Seguridad
 2. Sección dedicada
