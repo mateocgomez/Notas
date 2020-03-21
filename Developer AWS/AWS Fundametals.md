@@ -477,3 +477,25 @@ Cuando se necesita mas potencia en la lectura de datos se pueden hacer hasta 5 r
 
 Multi AZ -> sirve cuando pasa recuperacion de desastres
 Replicacion sincronica
+No para escalar, solamente se usa para recuperacion de desastres
+Se puede hacer una combinacion de ambas
+
+RDS Backups
+Se actiban automaticamente 
+Se saca un snapshot diario de la base de datos
+
+RDS Encryption
+Se usa mediante AWS KMS
+Certificados SSL para encriptar datos
+
+RDS Security
+Se despliegan en una zona privada de subnet
+El mismo concepto de EC2 Instances mediante security groups
+Las politicas IAM ayudan a controlar la seguridad
+Se puede controlar con Username y pasword para conectar
+Se puede conectar tambien con las credenciales de IAM
+
+RDS vs Aurora
+Aurora es propiedad de AWS
+Postgress y mysql ambas soportan en auroradb
+Aurora tiene un incremento de storage de 10 gb a 64 tb
