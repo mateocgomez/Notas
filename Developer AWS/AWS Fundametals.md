@@ -481,7 +481,7 @@ No para escalar, solamente se usa para recuperacion de desastres
 Se puede hacer una combinacion de ambas
 
 RDS Backups
-Se actiban automaticamente 
+Se activan automaticamente 
 Se saca un snapshot diario de la base de datos
 
 RDS Encryption
@@ -499,3 +499,80 @@ RDS vs Aurora
 Aurora es propiedad de AWS
 Postgress y mysql ambas soportan en auroradb
 Aurora tiene un incremento de storage de 10 gb a 64 tb
+
+
+# AWS ELASTICCACHE
+
+- De la misma manera que el RDS es para ser manejado en las Bases de Datos Relacionales...
+- ElastiCache es para ser administrado por Redis o Memcached
+- Las cachés son bases de datos en memoria con un rendimiento realmente alto, baja latencia
+- Ayuda a reducir la carga de las bases de datos para las cargas de trabajo intensivo de lectura
+- Ayuda a que su solicitud sea apátrida
+- Escriba Escalado usando fragmentación
+- Leer la escalada usando las réplicas de la lectura
+- Multi AZ con capacidad de conmutación por error
+- AWS se encarga del mantenimiento del sistema operativo / parches, optimizaciones, configuración, monitoreo, recuperación de fallos y copias de seguridad.
+
+Se puede implementar para dos tipos de arquitectura:
+
+- DB Cache , la idea de esto es que cuando una aplicacion haga una query a  RDS y si no esta disponible esta se almacena en elasticache y luego le devuelve la query , es decir se le hace la query pasa por elasticcache la devuelve rds y si esta disponible la envia a la aplicación si no la deja guardada en el servicio
+- User session store: sirve para mantener gurdado los datos en cache del usuario , es decir un usuario se loguea en una aplicacion y esta escribe los datos de la sesión en ElasticCache, el usuario puede que le pegue a otra instancia de la aplicación y como ya se habia guardado la información en elasticcache de los datos de sesion el usuario ya va a estar logueado.
+
+## Redis 
+
+- Redis es una tienda de valor clave en la memoria
+- Latencia súper baja (sub ms)
+- El caché sobrevive a los reinicios por defecto (se llama persistencia)
+- Genial para el anfitrión - Sesiones de usuario
+- Tabla de clasificación (para los juegos)
+- Estados distribuidos
+- Aliviar la presión sobre las bases de datos (como el RDS) - Pub / Sub capacidad para la mensajería
+- Multi AZ con conmutación por error automática para la recuperación de desastres si no quieres perder los datos de la caché
+- Soporte para Réplicas de Lectura
+
+ElasticCache es muy bueno para aplicaciones de carga de trabajao con lecturas fuerte como por ejemplo redes sociales, juegos, compartir media, o tambien para recommendation engines, para que guarde estas recomendaciones en el cache y no tenga que volver a traer la información
+
+Para almecenar la data en elastic se puede mediante dos formas:
+    - Lazy Loading: Carga los datos cuando es necesario 
+    - Write throught: consiste en actualizar los datos en cache cuando se actualice la base de datos
+
+## S3
+    - Los buckets deben ser nombres unicos 
+    - No son path si no llaves muy largos que identifican los buckets 🦸 
+    - Pueden guardar hasta 5TB 
+
+### Vesionamiento de S3 
+Se puede versionar los archivos que estan en S3 y cuando se va a sobrescribiendo el archivo el va creando cada versión de los documentos, por defecto el versionamiento viene nulo, pero se puede habilitar dicho versionamiento.
+
+### Encriptacion de objetos en S3
+
+Existen 4 metodos para encriptar los objetos en S3
+1. SSE-S3: encriptar usando llaves manejadas y administradas por AWS.
+Los objetos son encriptados en el lado del servidor.
+Usa AES-256 para encriptar
+Se debe establecer en la cabecera el siguiente parametro: "x-amz-server-side-encryption":"AES256"
+2. SSE-KMS: Encriptación con KMS
+Mediante KMS se tiene mas control 
+Se debe establecer en la cabecera el siguiente parametro: "x-amz-server-side-encryption":"aws:kms"
+3. SSE-C: Administrar sus propias llaves de encriptación
+S3 no va a guardar la llave de encriptación que se dio
+Se deben usar protocolos HTTPS
+La llave de encriptacion debe ser mandada en los headers HTTP por cualquier llamado realizado
+4. Encriptación del lado del cliente.
+El cliente encripta y desencripta en S3 , S3 simplemente guarda los objetos encriptados, se usa una libreria de S3 Encryption Client, el cliente administra las llaves de encriptación y los ciclos de encriptación
+
+También existe encriptación en transito (SSL), un enpoint http el cual no esta encriptado, y un endpoint https el cual esta encriptado en transito
+
+## S3 Security
+
+Basadas en usuario: son politicas de IAM las cuales permiten llamar al bucket si son permitidas por IAM
+
+Basadas en recursos: Politicas de bucket, Acceso a la lista de control de objetos y Acceso a la lista de control de buckets
+
+Bucket Policies -> Son JSON, permitir o denegar a una API. el usuario asigna la politica, dar acceso publico al bucket, forzar objetos a ser encriptados al cargarse, dar acceso a otras cuentas para entrar a ese bucket
+
+Soporta VPC, Loggin and Audit pueden ser guardados en el propio s3, MFA, URLS firmadas , que estan permitidas por cierto tiempo y luego expiran.
+
+### S3 WEBSITES
+S3 Permite almacenar paginas web estaticas.
+Error 403 se debe asegurar que el bucket tenga permisos de poder acceder a los objetos, para arreglar ese error tenemos que ir a permisos, y configurar la politica para dar los accesos
