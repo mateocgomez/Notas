@@ -576,3 +576,177 @@ Soporta VPC, Loggin and Audit pueden ser guardados en el propio s3, MFA, URLS fi
 ### S3 WEBSITES
 S3 Permite almacenar paginas web estaticas.
 Error 403 se debe asegurar que el bucket tenga permisos de poder acceder a los objetos, para arreglar ese error tenemos que ir a permisos, y configurar la politica para dar los accesos
+
+### S3 CORS 
+
+Cuando se piden cosas en un bucket y luego en otro y este no lo admite o no permite tomar la información es por que se deben habilitar los cors para que se puedan acoplar ambos buckets
+
+### S3 Consistency Model
+ 
+PUT Y GET TOMA UN 200 APENAS SE PONE UN OBJETO Y SE LEE LO TRAE INMEDIATAMENTE
+UN GET LUEGO UN PUT Y UN GET TOMA 400-200-400 consistencia
+PUT 200 PUT 200 GET 200 TOMA LA VERSIÓN MAS VIEJA
+DELETE 200 GET 200 PUEDE VOLVER A TOMAR EL OBJETO EN UN PERIODO CORTO
+
+### S3 PERFORMANCE
+Poner 4 caracteres aleatorios antes del nombre de la carpeta mejora el rendimiento del bucket por ejemplo <mi_cubo>/3er4_mi_carpeta/mi_archivo.txt
+Multipart para cargar rapidamente archivos cuando son mayores 100MB es recomendable, subiendo archivos en paralelo
+CloudFront para lecturas 
+S3 Transfer Acceleration para escribir objetos
+Cuando se usa SSE-KMS puede hacer que baje el rendimiento debido a la encriptación y desencriptación por KMS
+
+### S3 && Glacier Select
+
+Glacier es para almacenar archivos que duraran mucho tiempo en esta especie de buckets
+
+# Development
+
+## CLI
+
+Podemos usar todos los servicios con CLI, y podemos encontrar la documentación buscando el servicio en aws.
+
+### S3 CLI
+
+aws s3 ls -> trae todos los buckets que se encuentren en cli
+aws s3 ls s3://nombre_del_bucket para traer lo que tiene dentro de ese bucket y los files que contiene.
+aws s3 cp permite copiar archivos, objetos y demas de bucket a otro lado o copiarlos a la computadora.
+aws s3 help podemos traer toda la información que se ve en el website
+aws s3 mb para hacer buckets
+aws s3 rb para remover buckets
+
+### EC2 on AWS CLI
+
+Cuando vayamos a configurar aws configure en una instancia, nunca se deve poner los credenciales en la instancia, todo se debe manejar por roles de IAM, y le ponemos un rol para esa instancia y pueda entrar a los servicios que necesitamos, en la consola de AWS le podemos adjuntar el rol que queremos y hayamos creado para lo que necesite esa instancia.
+
+### IAM CLI
+En las politicas tambien se pueden crear versionamiento
+Aws tambien tiene un simulador de politicas
+Tambien se puede verificar politicas mediante cli
+Mediante el comando --dry-run para probar si el rol y la politica tienen acceso a alguna accion que queremos hacer.
+
+### Mensajes de error
+
+Para decodificarlos y poder entenderlos mejor usamos  aws sts decode-authorization-message --encoded-message y se pasa todo el mensaje 
+STS es una politica que tambien podemos agregar para que el rol decodifique cualquier error que vaya saliendo.
+
+### AWS EC2 Instance Metadata
+
+curl http://169.254.169.254/latest/meta-data 
+
+Esta ip la podemos correr en nuestras maquinas de ec2 y gracias a ella podemos hacer que nuestras instancias aprendan es decir tenemos dos conceptos
+Metadata = informacion acerca de la instancia
+Userdata = lanzar script de la instancia de ec2
+
+### AWS PROFILES
+
+aws configure --profile nombre-del perfil
+
+para cambiar de profile a profile mediante el siguiente comando
+aws s3 ls --profile nombre-de-la-cuenta
+
+
+1. aws configure
+
+### AWS ElasticBeanStalk
+
+Para desplegar aplicaciones en AWS, sin preocuparse mucho por la arquitectura, la responsabilidad del desarrollador solamente va a ser el codigo no se tiene que encargar de nada mas.
+
+Existen 3 modelos de arquitectura
+Single instance deployment: entorno para desarrollo
+lb + asg: entrono para produccion o preproduccion
+ASG: aplicaciones web que no estan en produccion, pueden ser desarrollos internos de la compañia u otros.
+
+Tiene 3 componentes importantes:
+1. La aplicacion
+2. Versionamiento de la aplicacion
+3. Nombres de entornos
+
+Se crea la aplicacion y el entorno, se sube el codigo en un versionamiento con un alias y se despliega en un entorno.
+
+Soporta una gran cantidad de aplicaciones en diferentes lenguajes , pero si su lenguaje no esta se puede crear algo custom pero es avanzado y no se espera que como desarrollador de AWS se haga.
+
+### Elastic Beanstalk Deployment Modes
+
+Single Instance bueno para desarrolladores, una instancia, una elastic ip, un asg, un az, una db
+
+Hight Availability with load balancer bueno para prod
+
+#### Options for updates
+
+All at once: este modo lo que hace es que tenemos la aplicacion en v1 y vamos a actualizar a la v2 , detiene la aplicacion y actualiza a la v2, por lo tanto va a ver un punto muerto en la aplicación, es bastante rapida el despliegue pero tiene su unico contra y es en el momento que la aplicación queda por un tiempo en punto muerto. no tinee costo adicional
+
+Rolling: mediante este despliegue lo que se hace es se asigna un bucket es decir de a cuantas instancias queremos actualizar, para este ejemplo usaremos 2 y tenemos 4 instancias, lo que hace es actualizar nuestro primer bucket de 2 a v2 y las otras dos instancias quedan en v1 trabajando mientras se actualiza, luego sigue con las otras dos hasta que todas queden en v2. no tiene costo adicional
+
+Rolling with addional batches:  lo que hace esta es que se crean dos nuevas instancias con la v2 se apagan dos primeras y se actualizan , luego las otras dos y se actualizan y al final se eliminan las dos nuevas instancias creadas, no siempre son dos instancias uno puede escoger el bucket que quiere ir creando, genera un costo adicional ya que siempre se esta trabajando a maxima capacidad de trabajo y no se pierden los flujos de trabajo es recomendable para producción.
+
+Immutable: lo que hace es con el grupo de escalamiento que se tiene se crea otro temporal con la version 2 , primero se crea uno para ver que esta trabajando y luego el resto, una vez creadas se ponen todas las instancias en el grupo de escalamiento y se apagan y terminan las de v1 y quedan las de v2 , genera un alto costo y tambien sirve para prod.
+
+Blue/Green: es bastante manual pero en ocasiones lo usan, lo que hace es tener el asg de v1 y se le reparte un 90% de trafico con route 53 y a otro asg con la v2 se le reparte un 10%, una vez la v2 a sido aprobada y no tiene ningun problema se enruta para que todo llegue a la v2.
+
+Para subir un codigo debe estar comprimido en un zip
+Para configurar todo de elastic puede ser hecho en codigo en un directorio .ebextensions/
+Resiven un yaml o json en formato
+Es como si se configura un archivo de serverless
+Tiene todas las posibilidades de trabajar como si fuera un archivo de serverless
+
+Tambien Beanstalk tiene un cli que se llama EB cli
+y sus comandos basicos son eb create, status health, events, logs, open, deploy, config, terminate para no tener que ir a la interfaz
+
+Beanstalk trabaja con cloudformation por eso tambien se puede escribir como serverless
+
+Para optimizar puede que se pueden empaquetar las dependencias y poderlas subir para optimizar un poco mas la carga de los archivos
+
+
+Tiene unas politicas de ciclos de vida ya que solo puede almacenar 1000 versioens de aplicaciones, las politicas son dos
+basadas en tiempo que remueven las versiones viejas.
+Basadas en espacio que quita cuanto tiene demasiadas versiones
+
+Cuando una tarea tiene demasiados trabajos y especificos es mejor usar worker environment cosas que pueden ser demasiado largas
+
+Para produccion es mejor desacoplar RDS de bean stalk 
+
+
+### Budgets para las cuentas
+Uno puedo crear un presupuesto para no gastar demasiado presupuesto y poner un limite de lo que se gasta y si se llega a gastar se pueden poner alertas para evitar gastos que se generan, y en este caso se puede evitar generar gastos inecesarios
+
+## AWS CICD - Continuous Integration - Continous Delivery
+
+Code -> Codecommit
+Build and test -> CodeBuild
+Deploy - Provision -> Elastic Beanstalk or CodeDeploy
+
+Para orquestar todo esto debemos usar AWS CodePipeline
+
+
+Codecommit notifications metiante SNS, borrado de ramas, push de branch , credenciales committed en el codigo, tambien se puede mediante reglas de eventos de cloudwatch
+
+### CodePipeline
+CodePipeline orquestar todos los servicios
+Funciona con artefactos: se sube el codigo a codecommit, se pasa este a un bucket en s3 este sale a un build vuelve a entrar a s3 y se va al deploy
+Para la resolución de problemas de pipeline esta en cloudwatch y se pueden configurar sns notification
+Si una etapa de codepipeline falla es puede coger la informacion en la consola.
+cloudtrail podemos auditar los llamados de api
+Tambien podria tener errores en las politicas y los pipeline
+Puede trabajar con secuencias en paralelo y tener distintas acciones en una etapa.
+
+
+### CodeBuild
+
+Servicio para realizar el build de nuestras aplicaciones
+KMS E IAM en seguridad
+CloudTrail
+Las instrucciónes se crean en un yml file buildspec.yml
+Codebuild se puede configurar localmente
+Se basa en los contenedores de docker
+buildspec.yml la raiz del proyecto
+
+BuilsSpec
+1. Definir variables de entorno
+SSM
+2. Fases :
+- Instalacion de las dependecias que se necesitan para hacer el build
+- Prebuild: comandos que se ejecutan antes del build
+- build comando del build.
+- post build: ultimos toques
+- Artefactos se suben al s3 encriptados con kms
+- Cache: archivos que se guardan en cache
