@@ -685,7 +685,7 @@ Blue/Green: es bastante manual pero en ocasiones lo usan, lo que hace es tener e
 
 Para subir un codigo debe estar comprimido en un zip
 Para configurar todo de elastic puede ser hecho en codigo en un directorio .ebextensions/
-Resiven un yaml o json en formato
+Reciben un yaml o json en formato
 Es como si se configura un archivo de serverless
 Tiene todas las posibilidades de trabajar como si fuera un archivo de serverless
 
@@ -750,3 +750,57 @@ SSM
 - post build: ultimos toques
 - Artefactos se suben al s3 encriptados con kms
 - Cache: archivos que se guardan en cache
+
+### CodeDeploy
+
+Una maquina de EC2 debe estar corriendo CodeDeploy Agent
+Trabaja con el appspec.yml
+Seccion del archivo: donde esta el codigo y donde lo extraigo al sistema si en un s3 o un repositorio
+Hooks: conjunto de instrucciones para desplegar las nuevas versiones y su orfen es:
+    - ApplicationStop: Se detiene la aplicacion para la nueva aplicacion
+    - DownloadBundle: de donde descargo la aplicacion
+    - BeforeInstall: Antes de instalar la aplicacion
+    - Afterinstall: despues de instalar la aplicacion
+    - ApplicationStart: Ejecutar la aplicación
+    - ValidateService: revisar que tan bien quedo la aplicacion desplegada
+
+Para hacer los deploy se puede hacer mediante rolling o blue/green
+
+
+### CodeStar
+Es una solucion que envuelve github,codecommit,codebuild,codedeploy,cloudformation,codepipeline,cloudwatch
+Ayudar a crear proyectos rapidos de CICD
+
+
+### CloudFormation
+
+Escribir infraestructura en codigo 
+
+Recursos !ref tambien se pueden referenciar instancias mediante !ref
+Parametros !Ref significa que estamos llamando a los parametros, estamos usando algun parametros, es para llamar el parametro que queremos usar
+
+Mappings -> variables fijas que estan en los templates de cloudformation, estan hardcode como por ejemplo prod, dev u otras.
+
+Los mappings son buuenos para cuando se conoce el valor que va a tener, y los parametros los usamos cuando esto puede cambiar y el usuario debe asignarlo
+
+Para usar los mappings se usa mediante !FindInMap !RegionMap -> el nombre de la valor que queremos usar en el findmap
+
+Outputs: Esto sirve para importar o conectar stack a otro stack y son aquellas salidas que puede sacar nuestro cloudformation
+No se puede deletar un stack si tiene referenciado un output en otro stack
+Para importar el valor debemos usar !ImportValue y el nombre de lo que estamos importando.
+
+Conditions controla la creacion de recursos o outputs basados en una condicion
+and , equals, if, not ,or son las condicionales que se pueden usar en conditions
+
+Funciones intricicas
+Ref -> parametros o recursos
+getatt -> algun atributo que esta expuesto podermos ver la documentación y tomar este atributo
+findinmap
+importvalue importar valores que son exportados
+join -> para hacer algun delimitador por ejemplo a:b:c o ingresa algun caracterer especial
+sub -> subsistuir valores
+
+rollbacks cloudformation: si uno tiene un stack esta funcionando bien y lo actualiza y no sirve tiene la posiblidad de hacerle un rollback y vuelve a su estado inicial, se eliminara cualquier cosa que se haya creado con esa actualización y volvera al estado anterior donde estaba saludable el stack
+
+
+## CloudTrail
