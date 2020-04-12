@@ -803,4 +803,56 @@ sub -> subsistuir valores
 rollbacks cloudformation: si uno tiene un stack esta funcionando bien y lo actualiza y no sirve tiene la posiblidad de hacerle un rollback y vuelve a su estado inicial, se eliminara cualquier cosa que se haya creado con esa actualización y volvera al estado anterior donde estaba saludable el stack
 
 
+# Monitoring
+
+## Cloudwatch
+
+Sirve para metricas, logs, eventos, alarmas
+
+Metricas de CloudWatch:
+
+Es un monitor para mirar las metricas de la cpu o red u otros
+Para ec2 tiene un detalle de monitoreo detallado dentro de ec2 y monitoring podemos habilitar detalladamente las metricas
+
+Alarmas de CloudWatch
+Sirven para lanzar cualquier notificacion de alguna metrica
+
+Eventos: Reglas que se ejecuten en algun evento o agendar algun evento
+
+## X-RAY
+Sirve para el trazado de microservicios
+Cuanto tiempo demora 
+
+Sirve para depurar la aplicación, traza exactamente en lo que hace todo el proceso de la aplicación, identifica cuellos de botella, muestra que esta pasando, la arquitectura, encuentra errores, le hace un debug a la aplicacion.
+
+Funciona mediante una traza, y se pueden usar anotaciones.
+
+Para activar x-ray mediante el sdk de x-ray
+instalar en la computadora el demon para poderlo usar.
+
+EC2 tiene que instalarse en el daemon, y darle los permisos iam 
+pARA LAMBDA iam, IMPORTAR EL SDK.
+
+
+El daemon debe tener persmisos iam 
+
+Segmentos se envian a x-ray y forman un trazon , el muestro muestra las peticiones enviadas y los request que se le envian, anotaciones son llave valor y sirven para filtrar los trazos
+metadata son llaves valor pero no son para buscar datos.
+
+El role es importante para que pueda trabajar con x-ray
+xray en ec2 trabaja on premise
+
+EC2
+LAMBDA
+BEANSTALK
+ECS /EKS/FARGTE
+
+En cualquiera de estos se puede ejecutar x-ray
+
+
 ## CloudTrail
+Monitoreo de llamado de llamados de api
+
+Gobierno, cumplimiento y autoria en AWS
+Todo lo que se haga en la cuenta aparece en cloudtrail, muestra todo lo que se hace
+Si algo se elimina o algo se puede ver en CloudTrail
