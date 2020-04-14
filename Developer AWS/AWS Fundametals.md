@@ -966,7 +966,10 @@ Los fragmentos pueden irse ordenando si van aumentando o disminuyendo
 3. Kinesis firehose -> ETL
 
 
-#### Kinecesis KCL
+#### Kinesis KCL
 
 Es una libreria java, ayuda a leer carga de trabajo, cada shard debe leer por una sola instancia de KCL
 4 shard = 4 KCL y en dynamodb se va viendo el profresop
+
+# LAMBDA
+
