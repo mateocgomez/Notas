@@ -30,7 +30,7 @@ dynamodb.putItem(params, function(err, data) {
 
 Pero si queremos actualizar todo el objeto podemos implemetar la función
 
-´´´js
+```js
 const dynamodbParams = {
     TableName: process.env.DYNAMODB_TABLE_BLICKANALYTICS,
     Key: {id: userId},
@@ -46,4 +46,4 @@ dynamoDb.updateItem(params, function(err, data) {
         console.log(data);
     }
 }
-´´´
+```

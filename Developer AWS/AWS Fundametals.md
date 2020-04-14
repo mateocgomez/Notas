@@ -856,3 +856,117 @@ Monitoreo de llamado de llamados de api
 Gobierno, cumplimiento y autoria en AWS
 Todo lo que se haga en la cuenta aparece en cloudtrail, muestra todo lo que se hace
 Si algo se elimina o algo se puede ver en CloudTrail
+
+
+Comunicaciones entre apps sincronica y asincronica
+
+asincronica poner algo en la cola y la cola se encarcar de conectar o sera el puente 
+
+Una aplicación sincronica puede ser problematica por que esta conectada directamente 
+
+# SQS
+1 mensaje por segundo a 10000 por segundo es escalable
+Pueden quedar de 4 dias a 14 dias
+No tiene limites de mensajes en la cola
+Puede tener mensajes duplicados
+No tiene un orden en especificó para la entrega de los mensajes
+No puede enviar mensajes mas grandes de 256kb
+
+## Tipos de colas en SQS
+
+### Delay Queue
+
+Retrasar los mensajes, podemos hacer que un mensaje no se envie de una si no hacerle un delay por ejemplo de 5 minutos y luego si procesarlo y enviarlo.
+
+Esqueleto del mensaje:
+
+- Definir un cuerpo
+-  metadata o atributos de mensaje llave valor.
+- delay delivery
+- se envia a sqs 
+- sqs nos devuelve un mensaje identificador y un hasg md5 en el cuerpo
+
+### Consuming messages
+
+SQS responde con un maximo de 10 mensajes.
+El consumidor le pregunta a un poll de mensajes si tiene alguno, sqs contesta y le devuelve los mensajes que tenga, una vez el los recibe se borran los mensajes
+Se usa visibility timeout
+
+### Visibility timeout
+
+Esta opción lo que hace es hacer invisible el mensaje a otros consumidores en un periodo determinado, se puede establecer entre 0 segundos y 12 horas, y no se deben poner periodos ni muy altos ni muy bajos ya que si se poenn muy altos por ejemplo 15 minutos y el consumidor no solicita el mensaje tocaria esperar otros 15 minutos para poder pedir nuevamente el mensaje y si se piden periodos muy bajos entonces puede que otro consumidor pida ese mensaje y el mensaje se replique varias veces.
+
+Tiene dos opciones importantes en la API, la cual es ChangeMessageVisibility: permite darle mas espera al mensaje invisible mientras este se procesa y DeleteMessage la cual le dice a SQS que se processo el mensaje y que puede ser borrado.
+
+### Dead letter queue
+
+Estos son mensajes que no han podido ser procesados despues de vario tiempo y nosotros establecemos ese umbral en el que queremos pasar esos mensaques a un DLQ(Dead Letter Queue), ya que estos mensajes se intentan la cantidad de veces que nosotros queremos volver a intentarlo y no procesa la información los enviamos a DLQ
+
+### Long Polling
+
+Cuando un consumidor va y pregunta si tiene algun mensaje y no tiene ninguno podemos habilitar en la API WaitTimeSeconds esta opción que permite esperar de 1 a 20 segundos si llega un mensaje nuevo y esto evita el llamado de API a SQS cada 20 milisegundos y generando costos, una buena practica es dejarlo en 20 segundos, si llega un nuevo mensaje en esos 20 segundos se enviara inmeditamente.
+
+
+### Fifo queue
+
+Primero en entrar primero en salir.
+
+Envia los mensajes en un orden.
+
+#### Deduplicacion: 
+Permite no enviar el mensaje varias veces mediante messagededuplicationid, si ve el mismo mensaje dentro de los 5 minutos entonces lo elimnara., si se envia el mensaje con el mismo cuerpo entonces el mensaje se desactivara.
+
+#### Secuencia: 
+Se debe especificar un messagegroupid, para enviarlo en un orden estricto.
+
+
+### SQS Extended Client
+
+Cuando queremos enviar algo que supere el limite de 256kb de SQS se puede usar esta libreria de java, que lo que hace es guardar la información en s3 se pasa a la cola con un pequeño mensaje de metadata y cuando el consumidor vaya a mirar esto se da cuenta que es información almacenada en S3 y la pide a S3
+
+### SQS Security 
+
+Encripta en vuelo mediante SSL HTTPS
+Podemos encriptar con SSE usando KMS
+Encripta el cuerpo no el mensaeje id, atributos o otra metadata.
+No existe punto de VPC 
+
+
+## SNS
+
+Poder enviar mensajes a varios servicios como notificaciones de email, sqs, entre otros.
+
+Se envia un mensaje a un topic y los subscribers son a donde podemos enviar los mensajes.
+
+Se puede integrar con varios servicios de Amazin.
+
+Se crea un topic, una subscription o varias y se publica el topic.
+
+SNS + SQS: Fan Out
+
+La idea es que se cree uh solo topic y se pueda enviar a varias colas, no se pierdan los datos.
+
+
+## Kinesis
+
+Big Data en tiempo real, una alternativa para manejar apache kafka
+Los datos se replican automaticamente en 2 AZ
+
+1. Kinesis Streams
+
+Datos en tiempo real su diferencia con SQS es que los datos no desaparecen y pueden ser reproducirse, permanencen de 1 a 7 dias
+
+Se maneja como si fuera un sistema de colas y a cada cola se le llama Shards o fragmentos
+Escribe 1 mb por segundo y luego lee 2 mb por segundo
+Los fragmentos pueden irse ordenando si van aumentando o disminuyendo
+
+
+
+2. Kinesis Analytics -> Analitica
+3. Kinesis firehose -> ETL
+
+
+#### Kinecesis KCL
+
+Es una libreria java, ayuda a leer carga de trabajo, cada shard debe leer por una sola instancia de KCL
+4 shard = 4 KCL y en dynamodb se va viendo el profresop
