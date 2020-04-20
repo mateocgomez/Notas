@@ -13,7 +13,7 @@ Toda la seguridad de AWS esta aca:
 2. Grupos
 3. Roles
 
-Una cuenta root y se compartir
+Una cuenta root y se compartirguleagulo
 Usuarios se crear para tener permisos 
 IAM es el centro de AWS
 Se tienen policies que se escriben en JSON
@@ -972,4 +972,258 @@ Es una libreria java, ayuda a leer carga de trabajo, cada shard debe leer por un
 4 shard = 4 KCL y en dynamodb se va viendo el profresop
 
 # LAMBDA
+
+Serveless
+Se paga por llamo y se paga por duracion o computo del lambda
+
+Role en lambda permite si se necesita conectar a s3 o  a cualquier permiso que se necesite.
+
+### Configuraciones en un lambda
+
+Timeout 3 segundo hasta 15 minutos 900s
+Variables de entorno
+Memoria desde 128mb hasta 3gb
+Se puede implementar dentro una vpc y asignarle ASG
+IAM
+
+Con VPC su rendimiento puede disminuir un poco
+
+## Concurrencia
+
+1000 ejecuciones simultaneas
+
+DLQ -> el lambda puede reintentar dos veces hacer un proceso pero si no da puede implementarse esta cola y mirar cuales fueron los datos que no pudieron volver a ser procesador
+
+Debuggin and error handling _> X-RAY
+DLQ -> Asynchronous invocation
+
+### LIMITES
+
+Memoria de 128 mb a 3gb
+Timeout 3 segundos a 15 minutos
+Capacidad de disco en temporal 512mb
+Limite de concurrencia 1000
+
+
+Despliegue
+
+Cuando se comprime debe ser 50mb
+Cuando se descomprime deben ser 250mb
+Se puede usar el /tmp para guardar algunas dependencias
+Variables de entorno 4kb
+
+### LAMBDA VERSIONs
+
+$LASTEST se trabaja con esta versión que es mutuable , v1 immuatble, podemos tener v2 y tuenen su propio arn
+
+Se accede usando el ARN correcto
+
+Aliases son apuntadores para las versiones de las funciones como dev test o prod y ponerlas en distintas versiones
+
+Podemos hacer implementaciones blue/green y para los usuarios nunca cambia, implementado los alias y poniendole un peso a cada uno de esta forma podemos usar los alias.
+
+
+### Dependencias
+Node.js npm node_modules
+Dar permisos para los archivos que se van a comprimir
+chmod a+r *
+
+Empaquetar todo
+zip -r  function.zip .
+
+Python pip --target 
+
+### LAMBDA AND CLOUDFORMATION
+Se guardan el zip en S3 , se referencia en el cloudformation de donde se obtiene el s3
+Se ponen los resources que se necesita y se referencia mediante el S3 y lo crea automaticamente.
+LambdaExecutionRole
+
+### LAMBDA /tmp
+
+Sirve para espacio para algunas operaciones o guardar algun archivo grande, no es persistente es temporal, 512 mb
+
+### Lambda Best Practices
+
+No usarlo en la funcion handler para que sea mas eficiente
+Usar variables de entorno y encriptarlas con KMS
+Minimizar las dependecias que se necesitan y no subir lambdas ni dependecias muy grandes
+Recordar los limites
+No poner lambdas en VPC ya que se demoraran un poco en llamar
+
+### Lambda @Edge
+Es una funcion clobar que se necesita desplegar en todo los CLOUDFRONT.
+Para aplicaciones globales
+
+
+# DynamoDB
+
+nosql databases, escalan horizontalmente.
+
+Replica en 3 AZ
+
+Tablas, tienen una primary key
+Puede tener un infinito de items es decir filas
+Cada item puede tener atributos
+El maximo de un item es 400 kb
+
+Partition Key -> HASH es unica para cada item
+
+Partition key + sort key es una combinacion que debe ser unica, ejemplo user_id es la partition key y el game_id el sort key genera la primary key, podriamos tener una partition key repetida varias veces en una tabla pero la sort key podria cambiar y genera una primary key diferente y el software lo acepta
+
+### Rendimiento
+
+Capacity units
+Existe una por lectura RCU -> Read Capacity Units
+Existe una por escritura WCU -> Write Capacity Units
+
+
+WCU
+
+Una unidad de capacidad de escritura representa una escritura por segundo para un item de 1 kb de tamaño
+
+
+10 OBJETOS X SEG DE 2 KB
+
+2 * 10 = 20 WCU
+
+
+120 OBJETOS X MIN DE 2 KB
+
+120 / 60 * 2 = 4 WCU
+RCU
+
+Dos formas para leer en una DB
+
+Eventually Consistent Read: Si leemos despues de escribir es posible que no obtengamos lo que queriamos por la replicacion (Cuando se menciona replicación es por que la DB se replica en 3 AZ y una vez se escribe en la primera y mientras se esta replicando y leemos puede que no se haya replicado en alguna de las otras dos AZ y no lo lee.)
+
+Strongly consistent read: si leemos despues de escribir vamos a obtener los datos correctamente.
+
+Por default: Usa la primera pero algunos atributos como getitem, query y scan usa la segunda.
+
+RCU = 1 SCR X SEGUNDO O 2 ECR X SEG, por un item de 4kb
+
+
+10 SCR SIZE 6KB
+
+COMO SON 6KB SE DEBE REDONDEAR A 8KB YA QUE DEBE TENER TAMAÑOS INTERMEDIOS Y UN ITEM DE LECTURA SON 4
+
+RCU = 10 * 8 / 4 = 20
+
+16 ECR X SEG DE 12 KB
+
+16/2 * 12/4 = 24
+
+
+### APIS DYNAMODB
+
+BatchWriteItem -> en una llamada poner 25 putitem o deleteitem
+BatchGetItem
+
+Scan parallel scans ineficiente es mejor usar query
+
+### Local Secondary Index - Dynamodb
+
+Permite cambiar el sort_key y de esta formar poder hacer un manejo se define durante la creación de la tabla
+No existe ningun throttling
+### Global secondary Index - Dynamodb
+
+GSI = PARTITION KEY + OPTIONAL SORT KEY
+
+Lo que hace es crear una nueva tabla en base de la primera en donde se puede cambiar la partition key y la sort key y de esa forma hacer queries y scan mas eficientes
+Si se escoje o se configura mal , entonces la tabla principal se puede joder.
+
+### Concurrency DynamoDB
+optimistic locking
+
+### Dax = DynamoDB ACCELERATOR
+
+Chache para lecturas y queris
+El cliente se comunica con dax y dax con la bd y cuando devuelve dax guarda en cache
+
+### Streams
+
+Cuando se hace algun cambio en dynamodb como create, update, delete puede terminar en un stream, y estos stream pueden ingresar mediante un lambda y solo tiene 24 horas de retención de datos
+
+
+### TTL (TIME TO LIVE)
+
+Se define un item y en base a item los datos que expiran se eliminan 
+
+project expression : sirve para traer unos elementos que quiero en especifico de la tabla
+filter expression: como su nombre lo dice filtrar y traer datos
+
+optimizacion :
+--page-size llama el numero de veces de api y proporciona rendimiento para traer los datos o el scan requerido
+
+paginación:
+--max-item el maximo de numero que quiero que traiga y me devuelve un next toker con el cual se puede usar para traer los siguientes datos que pueden existir esto es paginación.
+
+### dynamodb trasanctions
+
+Crear, actualizar, borrar varias filas en diferentes tablas al mismo tiempo, es una nueva caracteristica de dynamodb
+
+### security
+Acceso mediante vpc
+Contorl IAM
+Encriptacion KMS SSL TLS
+BACKUPS Y RESTAURACIÓN
+Global tables para muchas regiones 
+AMAZON DMS para migrar de mongo, oracle, entre otros
+se puede configurar dynamodb localmente para propositos de desarrollo
+
+# API GATEWAY
+
+Maneja tambien versionamiento como lambda
+Es necesario hacer el deployment para que tenga efectos 
+Stages son aquellos que se despliegan 
+Podemos hacer un rolled back de cualquier deployment
+
+Stages dev prod test y maneja los alias que tienene aliases y veriones para poder ir cambiando el comportamiento de cada uno
+
+### Canary deployment
+Escoge cuanto porcentaje quiere usar en cada uno de los dos versiones de api gateway que se pueden usar es una especi de blue/green
+
+### Mapping templates
+
+Para modificar request/responses
+JSON TO XML
+Velocity template Language (VTL)
+
+Sirve para devovler un JSON a XML
+
+### Api Gateway Cache
+Reduce el numero de llamados que se le hacen al backend
+default ttl 300 sgs 0s a 3600s
+capacidad 0.5 a 237gb
+el cliente puede saltarse cache 
+
+
+### Cors 
+Para habilitarlos debe tener OPTIONS y debe tener los siguientes headers:
+Access-Control-Allow-Methods
+Access-Control-Allow-Headers
+Access-Control-Allow-Origin
+
+### Security
+
+
+### IAM
+SIG V4 - IAM 
+Para roles o usuarios de su cuenta
+#### Lambda Authorizer
+Validar el token que se esta pasando por el header
+OAuth / SAML /
+Esta sirve para personas externas a nuestra infraestructura y poderlo validar
+
+
+#### Cognito
+Es otra forma tambien para la seguridad de los lambda, es para autenticación no para autorización
+
+## Cognito
+
+Sirve para dar a los usuarios una identidad y estos pueden interactuar con nuestra aplicación.
+
+- Cognito User pools: serverless database, identidad en la app, devuelve un JWT, se puede integrar con api gateway para la autenticación.
+- Cognito identity pools: permite acceder a los recursos directos de AWS
+- Cognito Sync ahora lo remplaza ahora AppSync, guarda prefenrencias, configuraciones y estados de la app.
 
