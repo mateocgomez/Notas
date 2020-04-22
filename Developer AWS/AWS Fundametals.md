@@ -9,12 +9,13 @@ Consolas de AWS tienen alcanzes de zonas menos IAM y S3
 ## IAM (Identity and Access Management)
 
 Toda la seguridad de AWS esta aca:
+
 1. Usuarios
 2. Grupos
 3. Roles
 
 Una cuenta root y se compartirguleagulo
-Usuarios se crear para tener permisos 
+Usuarios se crear para tener permisos
 IAM es el centro de AWS
 Se tienen policies que se escriben en JSON
 
@@ -24,9 +25,10 @@ Role Estos roles son para usos internos y recursos de AWS, son para maquinas
 
 Todos tienen politicas en JSON que definen que pueden hacer y que no pueden hacer.
 
-IAM tiene una vista global, permisos y gobierno por politicas, mfa se puede poner, iam tiene politicas definidas, como buena practica es mejor dar los permisos que necesite  para hacer su trabajo.
+IAM tiene una vista global, permisos y gobierno por politicas, mfa se puede poner, iam tiene politicas definidas, como buena practica es mejor dar los permisos que necesite para hacer su trabajo.
 
 ### IAM Federation
+
 Esto es para empresas grandes, credenciales de la compañoa y se puede integrar con directorios activos
 
 Usuario -> Persona fisica
@@ -38,7 +40,6 @@ Nunca se deben comitiar las credenciales, NUNCA.
 
 Nunca se debe usar la cuenta de ROOT como credenciales y otras cosas solo se debe usar para la configuracion inicial.
 
-
 1. Nunca usar las keys del root
 2. Habilitar MFA
 3. Crear usuarios individuales
@@ -48,12 +49,13 @@ Nunca se debe usar la cuenta de ROOT como credenciales y otras cosas solo se deb
 Uno puede customizar el nombre para la cuenta desde el IAM y customizar
 
 ## EC2
+
 Es uno de los servicios mas importantes de AWS
 
 - Es uno de los servicios mas ofrecidos AWS
 - Rentar maquinar virtuales
 - Almacena la informacion en discos virtuales
-- Distribuye la carga en maquinas 
+- Distribuye la carga en maquinas
 - Escalabe mediante grupos de auto escalamiento
 
 SUBNET SE PUEDE PONER EN ALGUN AZ QUE QUERAMOS
@@ -66,7 +68,6 @@ Si se tiene windows menor al 10 mediante putty, tambien se puede conectar median
 ### SSH Connect MAC/LINUX
 
 SSH es una de las funciones mas importantes esta permite el control remoto de una maquina usando linea de comandos, teniendo acceso mediante el puerto 22.
-
 
 ```js
 Para iniciar en la cuenta se debe tener la dirección ip publica que dan en EC2 y se escribe el siguiente comando en la terminal
@@ -81,11 +82,11 @@ chmod 400 llave.pem
 
 Conectarse por el browser, uno va a la consola pone el nombre con la que se quiere conectar, conectar y ya se conecta mediante el browser sin necesidad de usar terminal o keys, permitiendo conectarse sin terminal, esta conexión no se puede bloqueando ssh port, no deja conectar y esta regla no permitar conectarse a la maquina.
 
-
 AMI ID da una descripción de que plataforma se esta usando y al descripción de la instancia.
-### Tags
-Clave valor parejas -> para indentificar las instancias y poderlas clasificar
 
+### Tags
+
+Clave valor parejas -> para indentificar las instancias y poderlas clasificar
 
 # Security Groups
 
@@ -114,6 +115,7 @@ todo el trafico de entrada esta bloqueado por defecto y de salida esta autorizad
 También se le pueden dar permisos a ciertos security group en otras instancias y bloquear o permitir otros security group
 
 ### Ip privada vs publica
+
 Existen dos tipos de ips, ipv4 and ipv6
 Es mejor usar ipv4 ya que es la mas comun para usar en linea, mientras que la ipv6 is nueva y soluciona problemas para cosas como el internet de las cosas
 ip publica permite contectarse al internet, geolocalizacion facil y debe ser unica en la web
@@ -135,6 +137,7 @@ Para quitarla click derecho en la instancia, networking y desasociar elastic ip 
 
 Instalar apache web server para mostrar una pagina web
 Mostrar un index.html en la maquina de EC2
+
 ```sh
 1. Se corren los siguientes comandos sudo su para entrar como super usuario
 2. Se actualizan todos los paquetes con yum update -y
@@ -148,10 +151,12 @@ Mostrar un index.html en la maquina de EC2
 ```
 
 ### ec2 user data
+
 Se puede crear un script para que cada vez que se lanze la maquina se lanzen estos scriopt mediante el ec2 user data, para este ejemplo se creara un bootstrap que se llama o scripty se asegure de tener instalado apache http server instalado correctamente.
 
 Para configurar el USER DATA se lanza la instancia y en configuracion y detalles de la instancia en la pestaña de detalles avanzados esta un campo que se llama USER DATA , en esa seccion es donde va el script
 Este es un script para mantener actualizado el servidor y poder mantenerle apache iniciado e instalado correctamente, estos scripts siempre corren en sudo
+
 ```sh
 #!/bin/bash
 # install httpd(Linux 2 version)
@@ -162,8 +167,8 @@ systemctl enable httpd.service
 echo "Hello World for Workr.r" > /var/www/html/index.html
 ```
 
-
 ### ec2 instance launch types
+
 1. Instancias en demanda -> pequeñas cargas de tragajo
 2. Instancias reservadas: trabajos largos y se reserva mayor a un año
 3. Convertible reserved instances: puedes ser instancias flexibles
@@ -173,14 +178,16 @@ echo "Hello World for Workr.r" > /var/www/html/index.html
 7. dedicated hosts: servidor fisico control de la instancia en el lugar
 
 ### ec2 on demand
+
 1. se paga por el uso cobro por segundo despues del primer minuto
 2. tiene el costo mas alto pero no tiene pago por adelantado
 3. no tiene compromiso a largo plazo
-3. Recomendado para cargas de trabajo a corto plazo e ininterrumpidas, donde no se puede predecir cómo se comportará la aplicación.
+4. Recomendado para cargas de trabajo a corto plazo e ininterrumpidas, donde no se puede predecir cómo se comportará la aplicación.
 
 ### EC2 Reserved Instances
 
 Hasta un 75% de descuento en comparación con la demanda
+
 - Paga por adelantado lo que usas con un compromiso a largo plazo
 - El período de reserva puede ser de 1 o 3 años
 - Reservar un tipo de instancia específica
@@ -193,6 +200,7 @@ Hasta un 75% de descuento en comparación con la demanda
 ### EC2 Spot Instances Instancias puntuales
 
 Puede obtener un descuento de hasta el 90% comparado con el de la demanda
+
 - Pides un precio y obtienes la instancia siempre y cuando esté por debajo del precio
 - El precio varía según la oferta y la demanda
 - Las instancias de spot son reclamadas con una notificación de 2 minutos de aviso cuando el precio spot sube por encima de su oferta.
@@ -209,16 +217,15 @@ Puede obtener un descuento de hasta el 90% comparado con el de la demanda
 - Útil para el software que tiene un modelo de licencia complicado (BYOL - Bring Your Own License)
 - O para las empresas que tienen fuertes necesidades de regulación o de cumplimiento
 
-
 ### EC2 Dedicated Instances
+
 - Instancias que se ejecutan en un hardware dedicado a ti
 - Puede compartir el hardware con otras instancias en la misma cuenta
 - No hay control sobre la colocación de la instancia (puede mover el hardware después de Stop / Start)
 
-
 ### EC2 Pricing
 
-- Los precios de las instancias de EC2 (por hora) varían en función de estos parámetros: 
+- Los precios de las instancias de EC2 (por hora) varían en función de estos parámetros:
 - La región en la que estás
 - Tipo de instancia que estás usando
 - A la carta vs. Al contado vs. Reservado vs. Anfitrión dedicado
@@ -231,7 +238,8 @@ Puede obtener un descuento de hasta el 90% comparado con el de la demanda
 
 Sirve para crear tus propias imagenes, es decir una imagen para crear nuestras instancias, se pueden crear para windows o linux.
 
-El uso de un IAM construido a medida puede proporcionar las siguientes ventajas: 
+El uso de un IAM construido a medida puede proporcionar las siguientes ventajas:
+
 - Se necesitan paquetes preinstalados
 - Un tiempo de arranque más rápido (no hay necesidad de largos datos de usuario ec2 en el momento del arranque)
 - La máquina viene configurada con un software de monitoreo y de empresa
@@ -241,7 +249,6 @@ El uso de un IAM construido a medida puede proporcionar las siguientes ventajas:
 - Instalar su aplicación con antelación (para un despliegue más rápido cuando la escala automática)
 - Usando el AMI de otra persona que está optimizado para ejecutar una aplicación, DB, etc...
 - Los AMI están construidos para una región específica de AWS (!)
-
 
 ### Nomenclautura de las instancias
 
@@ -254,26 +261,29 @@ El uso de un IAM construido a medida puede proporcionar las siguientes ventajas:
 Cuando estas instancias son bursatiles significa que son en general y que su rendimiento de cpu esta bien, pueden manejar picos de carga de trabajo usando creditos de burst
 
 ### T2 Unlimited
+
 Sale en el 2017 y se pueden tener creditos de burst ilimiados, pagando un dinero extra y no se pierde el rendimiento de la cpu, si no se monitera adecuadamente los costos pueden ser bastantes costos
 
 ## LOAD BALANCER
 
 Son servidores que reenvían el tráfico de Internet a múltiples servidores (EC2 Instances) de bajada.
 Repartir la carga entre múltiples instancias descendentes
+
 - Exponer un único punto de acceso (DNS) a su aplicación
-- Manejar sin problemas los fallos de las instancias descendentes 
-- Realizar comprobaciones regulares del estado de sus instancias 
-- Proporcionar terminación SSL (HTTPS) para sus sitios web 
-- Aplicar la adherencia con las cookies 
-- Alta disponibilidad en todas las zonas 
+- Manejar sin problemas los fallos de las instancias descendentes
+- Realizar comprobaciones regulares del estado de sus instancias
+- Proporcionar terminación SSL (HTTPS) para sus sitios web
+- Aplicar la adherencia con las cookies
+- Alta disponibilidad en todas las zonas
 - Separar el tráfico público del privado
 
 ELB -> ELASTIC LOAD BALANCER , aws proporciona su propio balanceador de cargas y garantiza que trabaje eficientemente y no con un balanceador de cargas que quiera implementar usted mismo, garantiza el mantenimiento las actualizaciones y la alta disponibilidad.
 
 Existen 3 tipos de ELB en AWS
+
 1. Classic load balancer -> v1 lanzado en 2009
 2. Application load balancer -> de los nuevos balanceadores de carga v2 lanzado despues del 2016
-3.Network load balancer -> de los nuevos balanceadores de carga v2 lanzado despues del 2017
+   3.Network load balancer -> de los nuevos balanceadores de carga v2 lanzado despues del 2017
 
 Recomendado por amazon usar la nueva generación de los balanceadores de carga, Amazon también deja configurar los ELB privados o publicos.
 
@@ -281,7 +291,7 @@ Recomendado por amazon usar la nueva generación de los balanceadores de carga, 
 
 - Los controles de salud son cruciales para los equilibradores de carga
 - Permiten que el equilibrador de carga sepa si los casos que se presentan reenvían el tráfico a
-están disponibles para responder a las solicitudes
+  están disponibles para responder a las solicitudes
 - El chequeo médico se hace en un puerto y una ruta (/salud es común)
 - Si la respuesta no es 200 (OK), entonces la instancia no es saludable
 
@@ -293,10 +303,10 @@ están disponibles para responder a las solicitudes
 - Equilibrio de carga basado en la ruta en la URL
 - Equilibrio de carga basado en el nombre del host en la URL
 - Básicamente, son increíbles para los micro servicios y las aplicaciones basadas en contenedores.
-(ejemplo: Docker & Amazon ECS)
+  (ejemplo: Docker & Amazon ECS)
 - Tiene una función de mapeo de puertos para redirigir a un puerto dinámico
 - En comparación, necesitaríamos crear un equilibrador de carga clásico por
-solicitud antes. ¡Eso era muy caro e ineficiente!
+  solicitud antes. ¡Eso era muy caro e ineficiente!
 
 - La adherencia puede activarse a nivel del grupo objetivo
 - La misma petición va a la misma instancia
@@ -306,7 +316,7 @@ solicitud antes. ¡Eso era muy caro e ineficiente!
 - La verdadera IP del cliente se inserta en la cabecera X-Forwarded-For
 - También podemos obtener Puerto (X-Forwarded-Port) y proto (X-Forwarded-Proto)
 
-EC2 nunca ve la ip privada de la instancia 
+EC2 nunca ve la ip privada de la instancia
 
 ### Network load balancer
 
@@ -318,28 +328,31 @@ EC2 nunca ve la ip privada de la instancia
 - Los equilibradores de carga de la red se utilizan principalmente para el rendimiento extremo y no debería ser el equilibrador de carga que elija por defecto
 - En general, el proceso de creación es el mismo que el de los equilibradores de carga de la aplicación
 
-### IMPORTANTE 
+### IMPORTANTE
 
 1. Los balanceadores de carga clasicos estan obsoletos
+
 - ALB para HTTP/HTTPS Y WEBSOCKETS
 - NLB para TCP
+
 2. CLB y ALB soporta SSL cerificados y proveen terminación SSL
 3. Todos los ELB tienen la capacidad de health checj
 4. ALB puede rutear en un hostname/path
-4. ALB es perfecto para DOCKER
-5. Cualquier ELB tiene una static host name
-6. ELB se puede escalar pero no instantaneamente se debe contactar a AWS
-7. NLB ve el cliente directamente
-8. errores 4xx son por el cliente
-9. errores 5xx son de aplicaciones
-    - error 503 de capacidad o no tiene un objetivo registrado
-Si los ELB no pueden conectar a la aplicación se deben revisar los security group
+5. ALB es perfecto para DOCKER
+6. Cualquier ELB tiene una static host name
+7. ELB se puede escalar pero no instantaneamente se debe contactar a AWS
+8. NLB ve el cliente directamente
+9. errores 4xx son por el cliente
+10. errores 5xx son de aplicaciones - error 503 de capacidad o no tiene un objetivo registrado
+    Si los ELB no pueden conectar a la aplicación se deben revisar los security group
 
 En la creacion de un balanceador de cargas el schema puede ser de dos tipos:
+
 1. internet-facing -> para cuando la aplicacion va para internet y va a ser publica
 2. internal -> cuando la aplicacion va a ser internet
 
 ## Auto Scaling Group (ASG)
+
 - En la vida real, la carga de sus sitios web y aplicaciones puede cambiar
 - En la nube, puedes crear y deshacerte de los servidores muy rápidamente
 - El objetivo de un Grupo de Auto Escala (ASG) es:
@@ -349,6 +362,7 @@ En la creacion de un balanceador de cargas el schema puede ser de dos tipos:
 - Registrar automáticamente nuevas instancias a un balanceador de carga
 
 ### Configuración ASG
+
 Que se necita para configurar un ASG
 AMI + TIPO DE INSTANCIA
 EC2 User Data
@@ -356,11 +370,12 @@ EBS Volumnes
 Security Groups
 SSH Key Pair
 Min & max & initial size
-Network + subnets 
+Network + subnets
 Balanceador de cargar
 Politicas de escalamiento
 
 ### Auto Scaling Alarms
+
 1. Se puede escalar mediante alarmas de CloudWatch
 
 c
@@ -370,10 +385,9 @@ Se pueden definir nuevas reglas de autoescalamiento por EC2
 -> Promedio de entrada de red
 -> Promedio de entrada de salida
 
-
 ### Auto Scaling Custom Metric
--> Se puede escalar basado en metricas custom por ejemplo numero de conexiones por usuario
 
+-> Se puede escalar basado en metricas custom por ejemplo numero de conexiones por usuario
 
 ### ASG Brain dump
 
@@ -390,7 +404,7 @@ Se pueden definir nuevas reglas de autoescalamiento por EC2
 - Pueden ocurrir terminaciones inesperadas de vez en cuando (AWS le enviaría un correo electrónico)
 - A veces, necesitas una forma de almacenar los datos de tu instancia en algún lugar
 - Un volumen EBS (Elastic Block Store) es una unidad de red que puedes conectar
- a sus instancias mientras corren
+  a sus instancias mientras corren
 - Permite que sus instancias persistan los datos
 - Almacena los datos si se llega a perder alguna información
 - Es un disco duro en la red no es un disco duro fisico.
@@ -405,16 +419,18 @@ Se pueden definir nuevas reglas de autoescalamiento por EC2
 ### Tipos de volumenes de EBS
 
 -> Los volumenes de EBS vienen en 4 tipos
+
 1. GP2 (SSD): PROPOSITOS generales buenos precios, rndimiento
 2. IOI: remdimiento alto, baja latencia y grandes cargas de trabajo
 3. STI: bajo costo ya que los volumenes de discos son HDD
-4. SCI: bajo costo 
+4. SCI: bajo costo
 
 Tiene la caracteristica de que se puede por tamaño, ips
 
 Se pueden aumentar los volumenes, como el tamaño los iops y despues de aumentarlos se puede repartir
 
 ### EBS Snapshots
+
 - Un volumen de ebs se puede realizar el backend mediante snapshots
 - Los snapshots solo puede tomar el espacio actual en el volumen
 - Solo toma el snapshot que se este usando
@@ -422,11 +438,7 @@ Se pueden aumentar los volumenes, como el tamaño los iops y despues de aumentar
 
 ### EBS Encryption
 
-Cuando se crea una EBS encriptada:
-    1. Los datos encriptados se meten dentro del volumen
-    2. Todos los datos que entren o salgan seran encriptados
-    3. Todos los snapshots tambien seran encriptados
-    4. Todos los volumenes creados para el snapshot
+Cuando se crea una EBS encriptada: 1. Los datos encriptados se meten dentro del volumen 2. Todos los datos que entren o salgan seran encriptados 3. Todos los snapshots tambien seran encriptados 4. Todos los volumenes creados para el snapshot
 La encripcion y descripcion es transparente
 La encripcion tiene un minimo impacto en la latencia
 La encriptacion usa las llaves de KMS
@@ -437,21 +449,23 @@ Cuando se copia un snapshot sin encriptacion permite la encriptacion
 Alguna instancia no viene con ROOT EBS volumenes
 Ellos vienen con Instance Store
 Instance store viene con la maquina
-Pros: Mejor I/O 
-Cons: 
+Pros: Mejor I/O
+Cons:
+
 - Cuando se apaga, el instance store se pierde
 - No se puede cambiar el tamaño del instance store
 - Backups son operados por el usuario.
 
 EBS Solo puede ser metida en una instancia al tiempo
 EBS esta bloqueada por la AZ nivel
-Para hacer migraciones de EBS de un AZ tiene que tener un snapshot para luego poder hacer el otro 
+Para hacer migraciones de EBS de un AZ tiene que tener un snapshot para luego poder hacer el otro
 EBS backups solo usan io
 
 ## Route 53
+
 Route 53 se maneja por los DNS
 El DNS es una colección de reglas y registros que ayuda a los clientes a entender cómo llegar a un servidor a través de las URL.
-Los registros mas comunes son : 
+Los registros mas comunes son :
 • A: URL to IPv4
 • AAAA: URL to IPv6
 • CNAME: URL to URL
@@ -461,18 +475,20 @@ Route 53 sirve con dominios propios o privados y resolverlos con una vpc, tiene 
 Tambien se puede usar CNAME
 
 ## RDS (Relational Database Service)
+
 Para bases de datos relacionales y permite crear bases de datos en la nube manejadas por AWS, Aurora es para base de datos relacionales propiedad de AWS
 
 Ventajas de usar RDS y no desplegar una base de datos con EC2
+
 - Se puede crear backups y restaurar en un timestamp en especifico
 - Dashboards de monitoreo
 - Replicas de lectura para mejorar el rendimiento de lectura
-. Multi AZ para recuperar en un desastre
+  . Multi AZ para recuperar en un desastre
 - Ventana de mantenimiento para actualizaciones
 - Capacidad de escalado tanto vertical como horizonal
 - La unica desventaja es que no tiene conexcion ssh para las instancias
 
-Leer Réplicas para la escalabilidad de lectura 
+Leer Réplicas para la escalabilidad de lectura
 Cuando se necesita mas potencia en la lectura de datos se pueden hacer hasta 5 replicas de lectura de esta forma mejor el rendimiento de la lectura en la base de datos, replicando en AZ y es de forma asyncrono entonces lee constantemente y menos delay y tiempos de espera.
 
 Multi AZ -> sirve cuando pasa recuperacion de desastres
@@ -481,7 +497,7 @@ No para escalar, solamente se usa para recuperacion de desastres
 Se puede hacer una combinacion de ambas
 
 RDS Backups
-Se activan automaticamente 
+Se activan automaticamente
 Se saca un snapshot diario de la base de datos
 
 RDS Encryption
@@ -500,7 +516,6 @@ Aurora es propiedad de AWS
 Postgress y mysql ambas soportan en auroradb
 Aurora tiene un incremento de storage de 10 gb a 64 tb
 
-
 # AWS ELASTICCACHE
 
 - De la misma manera que el RDS es para ser manejado en las Bases de Datos Relacionales...
@@ -515,10 +530,10 @@ Aurora tiene un incremento de storage de 10 gb a 64 tb
 
 Se puede implementar para dos tipos de arquitectura:
 
-- DB Cache , la idea de esto es que cuando una aplicacion haga una query a  RDS y si no esta disponible esta se almacena en elasticache y luego le devuelve la query , es decir se le hace la query pasa por elasticcache la devuelve rds y si esta disponible la envia a la aplicación si no la deja guardada en el servicio
+- DB Cache , la idea de esto es que cuando una aplicacion haga una query a RDS y si no esta disponible esta se almacena en elasticache y luego le devuelve la query , es decir se le hace la query pasa por elasticcache la devuelve rds y si esta disponible la envia a la aplicación si no la deja guardada en el servicio
 - User session store: sirve para mantener gurdado los datos en cache del usuario , es decir un usuario se loguea en una aplicacion y esta escribe los datos de la sesión en ElasticCache, el usuario puede que le pegue a otra instancia de la aplicación y como ya se habia guardado la información en elasticcache de los datos de sesion el usuario ya va a estar logueado.
 
-## Redis 
+## Redis
 
 - Redis es una tienda de valor clave en la memoria
 - Latencia súper baja (sub ms)
@@ -532,34 +547,35 @@ Se puede implementar para dos tipos de arquitectura:
 
 ElasticCache es muy bueno para aplicaciones de carga de trabajao con lecturas fuerte como por ejemplo redes sociales, juegos, compartir media, o tambien para recommendation engines, para que guarde estas recomendaciones en el cache y no tenga que volver a traer la información
 
-Para almecenar la data en elastic se puede mediante dos formas:
-    - Lazy Loading: Carga los datos cuando es necesario 
-    - Write throught: consiste en actualizar los datos en cache cuando se actualice la base de datos
+Para almecenar la data en elastic se puede mediante dos formas: - Lazy Loading: Carga los datos cuando es necesario - Write throught: consiste en actualizar los datos en cache cuando se actualice la base de datos
 
 ## S3
-    - Los buckets deben ser nombres unicos 
-    - No son path si no llaves muy largos que identifican los buckets 🦸 
-    - Pueden guardar hasta 5TB 
 
-### Vesionamiento de S3 
+    - Los buckets deben ser nombres unicos
+    - No son path si no llaves muy largos que identifican los buckets 🦸
+    - Pueden guardar hasta 5TB
+
+### Vesionamiento de S3
+
 Se puede versionar los archivos que estan en S3 y cuando se va a sobrescribiendo el archivo el va creando cada versión de los documentos, por defecto el versionamiento viene nulo, pero se puede habilitar dicho versionamiento.
 
 ### Encriptacion de objetos en S3
 
 Existen 4 metodos para encriptar los objetos en S3
+
 1. SSE-S3: encriptar usando llaves manejadas y administradas por AWS.
-Los objetos son encriptados en el lado del servidor.
-Usa AES-256 para encriptar
-Se debe establecer en la cabecera el siguiente parametro: "x-amz-server-side-encryption":"AES256"
+   Los objetos son encriptados en el lado del servidor.
+   Usa AES-256 para encriptar
+   Se debe establecer en la cabecera el siguiente parametro: "x-amz-server-side-encryption":"AES256"
 2. SSE-KMS: Encriptación con KMS
-Mediante KMS se tiene mas control 
-Se debe establecer en la cabecera el siguiente parametro: "x-amz-server-side-encryption":"aws:kms"
+   Mediante KMS se tiene mas control
+   Se debe establecer en la cabecera el siguiente parametro: "x-amz-server-side-encryption":"aws:kms"
 3. SSE-C: Administrar sus propias llaves de encriptación
-S3 no va a guardar la llave de encriptación que se dio
-Se deben usar protocolos HTTPS
-La llave de encriptacion debe ser mandada en los headers HTTP por cualquier llamado realizado
+   S3 no va a guardar la llave de encriptación que se dio
+   Se deben usar protocolos HTTPS
+   La llave de encriptacion debe ser mandada en los headers HTTP por cualquier llamado realizado
 4. Encriptación del lado del cliente.
-El cliente encripta y desencripta en S3 , S3 simplemente guarda los objetos encriptados, se usa una libreria de S3 Encryption Client, el cliente administra las llaves de encriptación y los ciclos de encriptación
+   El cliente encripta y desencripta en S3 , S3 simplemente guarda los objetos encriptados, se usa una libreria de S3 Encryption Client, el cliente administra las llaves de encriptación y los ciclos de encriptación
 
 También existe encriptación en transito (SSL), un enpoint http el cual no esta encriptado, y un endpoint https el cual esta encriptado en transito
 
@@ -574,24 +590,26 @@ Bucket Policies -> Son JSON, permitir o denegar a una API. el usuario asigna la 
 Soporta VPC, Loggin and Audit pueden ser guardados en el propio s3, MFA, URLS firmadas , que estan permitidas por cierto tiempo y luego expiran.
 
 ### S3 WEBSITES
+
 S3 Permite almacenar paginas web estaticas.
 Error 403 se debe asegurar que el bucket tenga permisos de poder acceder a los objetos, para arreglar ese error tenemos que ir a permisos, y configurar la politica para dar los accesos
 
-### S3 CORS 
+### S3 CORS
 
 Cuando se piden cosas en un bucket y luego en otro y este no lo admite o no permite tomar la información es por que se deben habilitar los cors para que se puedan acoplar ambos buckets
 
 ### S3 Consistency Model
- 
+
 PUT Y GET TOMA UN 200 APENAS SE PONE UN OBJETO Y SE LEE LO TRAE INMEDIATAMENTE
 UN GET LUEGO UN PUT Y UN GET TOMA 400-200-400 consistencia
 PUT 200 PUT 200 GET 200 TOMA LA VERSIÓN MAS VIEJA
 DELETE 200 GET 200 PUEDE VOLVER A TOMAR EL OBJETO EN UN PERIODO CORTO
 
 ### S3 PERFORMANCE
+
 Poner 4 caracteres aleatorios antes del nombre de la carpeta mejora el rendimiento del bucket por ejemplo <mi_cubo>/3er4_mi_carpeta/mi_archivo.txt
 Multipart para cargar rapidamente archivos cuando son mayores 100MB es recomendable, subiendo archivos en paralelo
-CloudFront para lecturas 
+CloudFront para lecturas
 S3 Transfer Acceleration para escribir objetos
 Cuando se usa SSE-KMS puede hacer que baje el rendimiento debido a la encriptación y desencriptación por KMS
 
@@ -619,6 +637,7 @@ aws s3 rb para remover buckets
 Cuando vayamos a configurar aws configure en una instancia, nunca se deve poner los credenciales en la instancia, todo se debe manejar por roles de IAM, y le ponemos un rol para esa instancia y pueda entrar a los servicios que necesitamos, en la consola de AWS le podemos adjuntar el rol que queremos y hayamos creado para lo que necesite esa instancia.
 
 ### IAM CLI
+
 En las politicas tambien se pueden crear versionamiento
 Aws tambien tiene un simulador de politicas
 Tambien se puede verificar politicas mediante cli
@@ -626,12 +645,12 @@ Mediante el comando --dry-run para probar si el rol y la politica tienen acceso 
 
 ### Mensajes de error
 
-Para decodificarlos y poder entenderlos mejor usamos  aws sts decode-authorization-message --encoded-message y se pasa todo el mensaje 
+Para decodificarlos y poder entenderlos mejor usamos aws sts decode-authorization-message --encoded-message y se pasa todo el mensaje
 STS es una politica que tambien podemos agregar para que el rol decodifique cualquier error que vaya saliendo.
 
 ### AWS EC2 Instance Metadata
 
-curl http://169.254.169.254/latest/meta-data 
+curl http://169.254.169.254/latest/meta-data
 
 Esta ip la podemos correr en nuestras maquinas de ec2 y gracias a ella podemos hacer que nuestras instancias aprendan es decir tenemos dos conceptos
 Metadata = informacion acerca de la instancia
@@ -643,7 +662,6 @@ aws configure --profile nombre-del perfil
 
 para cambiar de profile a profile mediante el siguiente comando
 aws s3 ls --profile nombre-de-la-cuenta
-
 
 1. aws configure
 
@@ -657,6 +675,7 @@ lb + asg: entrono para produccion o preproduccion
 ASG: aplicaciones web que no estan en produccion, pueden ser desarrollos internos de la compañia u otros.
 
 Tiene 3 componentes importantes:
+
 1. La aplicacion
 2. Versionamiento de la aplicacion
 3. Nombres de entornos
@@ -677,7 +696,7 @@ All at once: este modo lo que hace es que tenemos la aplicacion en v1 y vamos a 
 
 Rolling: mediante este despliegue lo que se hace es se asigna un bucket es decir de a cuantas instancias queremos actualizar, para este ejemplo usaremos 2 y tenemos 4 instancias, lo que hace es actualizar nuestro primer bucket de 2 a v2 y las otras dos instancias quedan en v1 trabajando mientras se actualiza, luego sigue con las otras dos hasta que todas queden en v2. no tiene costo adicional
 
-Rolling with addional batches:  lo que hace esta es que se crean dos nuevas instancias con la v2 se apagan dos primeras y se actualizan , luego las otras dos y se actualizan y al final se eliminan las dos nuevas instancias creadas, no siempre son dos instancias uno puede escoger el bucket que quiere ir creando, genera un costo adicional ya que siempre se esta trabajando a maxima capacidad de trabajo y no se pierden los flujos de trabajo es recomendable para producción.
+Rolling with addional batches: lo que hace esta es que se crean dos nuevas instancias con la v2 se apagan dos primeras y se actualizan , luego las otras dos y se actualizan y al final se eliminan las dos nuevas instancias creadas, no siempre son dos instancias uno puede escoger el bucket que quiere ir creando, genera un costo adicional ya que siempre se esta trabajando a maxima capacidad de trabajo y no se pierden los flujos de trabajo es recomendable para producción.
 
 Immutable: lo que hace es con el grupo de escalamiento que se tiene se crea otro temporal con la version 2 , primero se crea uno para ver que esta trabajando y luego el resto, una vez creadas se ponen todas las instancias en el grupo de escalamiento y se apagan y terminan las de v1 y quedan las de v2 , genera un alto costo y tambien sirve para prod.
 
@@ -696,17 +715,16 @@ Beanstalk trabaja con cloudformation por eso tambien se puede escribir como serv
 
 Para optimizar puede que se pueden empaquetar las dependencias y poderlas subir para optimizar un poco mas la carga de los archivos
 
-
 Tiene unas politicas de ciclos de vida ya que solo puede almacenar 1000 versioens de aplicaciones, las politicas son dos
 basadas en tiempo que remueven las versiones viejas.
 Basadas en espacio que quita cuanto tiene demasiadas versiones
 
 Cuando una tarea tiene demasiados trabajos y especificos es mejor usar worker environment cosas que pueden ser demasiado largas
 
-Para produccion es mejor desacoplar RDS de bean stalk 
-
+Para produccion es mejor desacoplar RDS de bean stalk
 
 ### Budgets para las cuentas
+
 Uno puedo crear un presupuesto para no gastar demasiado presupuesto y poner un limite de lo que se gasta y si se llega a gastar se pueden poner alertas para evitar gastos que se generan, y en este caso se puede evitar generar gastos inecesarios
 
 ## AWS CICD - Continuous Integration - Continous Delivery
@@ -717,10 +735,10 @@ Deploy - Provision -> Elastic Beanstalk or CodeDeploy
 
 Para orquestar todo esto debemos usar AWS CodePipeline
 
-
 Codecommit notifications metiante SNS, borrado de ramas, push de branch , credenciales committed en el codigo, tambien se puede mediante reglas de eventos de cloudwatch
 
 ### CodePipeline
+
 CodePipeline orquestar todos los servicios
 Funciona con artefactos: se sube el codigo a codecommit, se pasa este a un bucket en s3 este sale a un build vuelve a entrar a s3 y se va al deploy
 Para la resolución de problemas de pipeline esta en cloudwatch y se pueden configurar sns notification
@@ -728,7 +746,6 @@ Si una etapa de codepipeline falla es puede coger la informacion en la consola.
 cloudtrail podemos auditar los llamados de api
 Tambien podria tener errores en las politicas y los pipeline
 Puede trabajar con secuencias en paralelo y tener distintas acciones en una etapa.
-
 
 ### CodeBuild
 
@@ -741,9 +758,11 @@ Se basa en los contenedores de docker
 buildspec.yml la raiz del proyecto
 
 BuilsSpec
+
 1. Definir variables de entorno
-SSM
+   SSM
 2. Fases :
+
 - Instalacion de las dependecias que se necesitan para hacer el build
 - Prebuild: comandos que se ejecutan antes del build
 - build comando del build.
@@ -756,25 +775,18 @@ SSM
 Una maquina de EC2 debe estar corriendo CodeDeploy Agent
 Trabaja con el appspec.yml
 Seccion del archivo: donde esta el codigo y donde lo extraigo al sistema si en un s3 o un repositorio
-Hooks: conjunto de instrucciones para desplegar las nuevas versiones y su orfen es:
-    - ApplicationStop: Se detiene la aplicacion para la nueva aplicacion
-    - DownloadBundle: de donde descargo la aplicacion
-    - BeforeInstall: Antes de instalar la aplicacion
-    - Afterinstall: despues de instalar la aplicacion
-    - ApplicationStart: Ejecutar la aplicación
-    - ValidateService: revisar que tan bien quedo la aplicacion desplegada
+Hooks: conjunto de instrucciones para desplegar las nuevas versiones y su orfen es: - ApplicationStop: Se detiene la aplicacion para la nueva aplicacion - DownloadBundle: de donde descargo la aplicacion - BeforeInstall: Antes de instalar la aplicacion - Afterinstall: despues de instalar la aplicacion - ApplicationStart: Ejecutar la aplicación - ValidateService: revisar que tan bien quedo la aplicacion desplegada
 
 Para hacer los deploy se puede hacer mediante rolling o blue/green
 
-
 ### CodeStar
+
 Es una solucion que envuelve github,codecommit,codebuild,codedeploy,cloudformation,codepipeline,cloudwatch
 Ayudar a crear proyectos rapidos de CICD
 
-
 ### CloudFormation
 
-Escribir infraestructura en codigo 
+Escribir infraestructura en codigo
 
 Recursos !ref tambien se pueden referenciar instancias mediante !ref
 Parametros !Ref significa que estamos llamando a los parametros, estamos usando algun parametros, es para llamar el parametro que queremos usar
@@ -802,7 +814,6 @@ sub -> subsistuir valores
 
 rollbacks cloudformation: si uno tiene un stack esta funcionando bien y lo actualiza y no sirve tiene la posiblidad de hacerle un rollback y vuelve a su estado inicial, se eliminara cualquier cosa que se haya creado con esa actualización y volvera al estado anterior donde estaba saludable el stack
 
-
 # Monitoring
 
 ## Cloudwatch
@@ -820,8 +831,9 @@ Sirven para lanzar cualquier notificacion de alguna metrica
 Eventos: Reglas que se ejecuten en algun evento o agendar algun evento
 
 ## X-RAY
+
 Sirve para el trazado de microservicios
-Cuanto tiempo demora 
+Cuanto tiempo demora
 
 Sirve para depurar la aplicación, traza exactamente en lo que hace todo el proceso de la aplicación, identifica cuellos de botella, muestra que esta pasando, la arquitectura, encuentra errores, le hace un debug a la aplicacion.
 
@@ -830,11 +842,10 @@ Funciona mediante una traza, y se pueden usar anotaciones.
 Para activar x-ray mediante el sdk de x-ray
 instalar en la computadora el demon para poderlo usar.
 
-EC2 tiene que instalarse en el daemon, y darle los permisos iam 
+EC2 tiene que instalarse en el daemon, y darle los permisos iam
 pARA LAMBDA iam, IMPORTAR EL SDK.
 
-
-El daemon debe tener persmisos iam 
+El daemon debe tener persmisos iam
 
 Segmentos se envian a x-ray y forman un trazon , el muestro muestra las peticiones enviadas y los request que se le envian, anotaciones son llave valor y sirven para filtrar los trazos
 metadata son llaves valor pero no son para buscar datos.
@@ -849,22 +860,22 @@ ECS /EKS/FARGTE
 
 En cualquiera de estos se puede ejecutar x-ray
 
-
 ## CloudTrail
+
 Monitoreo de llamado de llamados de api
 
 Gobierno, cumplimiento y autoria en AWS
 Todo lo que se haga en la cuenta aparece en cloudtrail, muestra todo lo que se hace
 Si algo se elimina o algo se puede ver en CloudTrail
 
-
 Comunicaciones entre apps sincronica y asincronica
 
-asincronica poner algo en la cola y la cola se encarcar de conectar o sera el puente 
+asincronica poner algo en la cola y la cola se encarcar de conectar o sera el puente
 
-Una aplicación sincronica puede ser problematica por que esta conectada directamente 
+Una aplicación sincronica puede ser problematica por que esta conectada directamente
 
 # SQS
+
 1 mensaje por segundo a 10000 por segundo es escalable
 Pueden quedar de 4 dias a 14 dias
 No tiene limites de mensajes en la cola
@@ -881,9 +892,9 @@ Retrasar los mensajes, podemos hacer que un mensaje no se envie de una si no hac
 Esqueleto del mensaje:
 
 - Definir un cuerpo
--  metadata o atributos de mensaje llave valor.
+- metadata o atributos de mensaje llave valor.
 - delay delivery
-- se envia a sqs 
+- se envia a sqs
 - sqs nos devuelve un mensaje identificador y un hasg md5 en el cuerpo
 
 ### Consuming messages
@@ -906,31 +917,29 @@ Estos son mensajes que no han podido ser procesados despues de vario tiempo y no
 
 Cuando un consumidor va y pregunta si tiene algun mensaje y no tiene ninguno podemos habilitar en la API WaitTimeSeconds esta opción que permite esperar de 1 a 20 segundos si llega un mensaje nuevo y esto evita el llamado de API a SQS cada 20 milisegundos y generando costos, una buena practica es dejarlo en 20 segundos, si llega un nuevo mensaje en esos 20 segundos se enviara inmeditamente.
 
-
 ### Fifo queue
 
 Primero en entrar primero en salir.
 
 Envia los mensajes en un orden.
 
-#### Deduplicacion: 
+#### Deduplicacion:
 Permite no enviar el mensaje varias veces mediante messagededuplicationid, si ve el mismo mensaje dentro de los 5 minutos entonces lo elimnara., si se envia el mensaje con el mismo cuerpo entonces el mensaje se desactivara.
 
-#### Secuencia: 
-Se debe especificar un messagegroupid, para enviarlo en un orden estricto.
+#### Secuencia:
 
+Se debe especificar un messagegroupid, para enviarlo en un orden estricto.
 
 ### SQS Extended Client
 
 Cuando queremos enviar algo que supere el limite de 256kb de SQS se puede usar esta libreria de java, que lo que hace es guardar la información en s3 se pasa a la cola con un pequeño mensaje de metadata y cuando el consumidor vaya a mirar esto se da cuenta que es información almacenada en S3 y la pide a S3
 
-### SQS Security 
+### SQS Security
 
 Encripta en vuelo mediante SSL HTTPS
 Podemos encriptar con SSE usando KMS
 Encripta el cuerpo no el mensaeje id, atributos o otra metadata.
-No existe punto de VPC 
-
+No existe punto de VPC
 
 ## SNS
 
@@ -946,7 +955,6 @@ SNS + SQS: Fan Out
 
 La idea es que se cree uh solo topic y se pueda enviar a varias colas, no se pierdan los datos.
 
-
 ## Kinesis
 
 Big Data en tiempo real, una alternativa para manejar apache kafka
@@ -960,11 +968,8 @@ Se maneja como si fuera un sistema de colas y a cada cola se le llama Shards o f
 Escribe 1 mb por segundo y luego lee 2 mb por segundo
 Los fragmentos pueden irse ordenando si van aumentando o disminuyendo
 
-
-
 2. Kinesis Analytics -> Analitica
 3. Kinesis firehose -> ETL
-
 
 #### Kinesis KCL
 
@@ -976,7 +981,7 @@ Es una libreria java, ayuda a leer carga de trabajo, cada shard debe leer por un
 Serveless
 Se paga por llamo y se paga por duracion o computo del lambda
 
-Role en lambda permite si se necesita conectar a s3 o  a cualquier permiso que se necesite.
+Role en lambda permite si se necesita conectar a s3 o a cualquier permiso que se necesite.
 
 ### Configuraciones en un lambda
 
@@ -994,7 +999,7 @@ Con VPC su rendimiento puede disminuir un poco
 
 DLQ -> el lambda puede reintentar dos veces hacer un proceso pero si no da puede implementarse esta cola y mirar cuales fueron los datos que no pudieron volver a ser procesador
 
-Debuggin and error handling _> X-RAY
+Debuggin and error handling \_> X-RAY
 DLQ -> Asynchronous invocation
 
 ### LIMITES
@@ -1003,7 +1008,6 @@ Memoria de 128 mb a 3gb
 Timeout 3 segundos a 15 minutos
 Capacidad de disco en temporal 512mb
 Limite de concurrencia 1000
-
 
 Despliegue
 
@@ -1014,7 +1018,7 @@ Variables de entorno 4kb
 
 ### LAMBDA VERSIONs
 
-$LASTEST se trabaja con esta versión que es mutuable , v1 immuatble, podemos tener v2 y tuenen su propio arn
+\$LASTEST se trabaja con esta versión que es mutuable , v1 immuatble, podemos tener v2 y tuenen su propio arn
 
 Se accede usando el ARN correcto
 
@@ -1022,18 +1026,19 @@ Aliases son apuntadores para las versiones de las funciones como dev test o prod
 
 Podemos hacer implementaciones blue/green y para los usuarios nunca cambia, implementado los alias y poniendole un peso a cada uno de esta forma podemos usar los alias.
 
-
 ### Dependencias
+
 Node.js npm node_modules
 Dar permisos para los archivos que se van a comprimir
-chmod a+r *
+chmod a+r \*
 
 Empaquetar todo
-zip -r  function.zip .
+zip -r function.zip .
 
-Python pip --target 
+Python pip --target
 
 ### LAMBDA AND CLOUDFORMATION
+
 Se guardan el zip en S3 , se referencia en el cloudformation de donde se obtiene el s3
 Se ponen los resources que se necesita y se referencia mediante el S3 y lo crea automaticamente.
 LambdaExecutionRole
@@ -1051,9 +1056,9 @@ Recordar los limites
 No poner lambdas en VPC ya que se demoraran un poco en llamar
 
 ### Lambda @Edge
+
 Es una funcion clobar que se necesita desplegar en todo los CLOUDFRONT.
 Para aplicaciones globales
-
 
 # DynamoDB
 
@@ -1076,20 +1081,17 @@ Capacity units
 Existe una por lectura RCU -> Read Capacity Units
 Existe una por escritura WCU -> Write Capacity Units
 
-
 WCU
 
 Una unidad de capacidad de escritura representa una escritura por segundo para un item de 1 kb de tamaño
 
-
 10 OBJETOS X SEG DE 2 KB
 
-2 * 10 = 20 WCU
-
+2 \* 10 = 20 WCU
 
 120 OBJETOS X MIN DE 2 KB
 
-120 / 60 * 2 = 4 WCU
+120 / 60 \* 2 = 4 WCU
 RCU
 
 Dos formas para leer en una DB
@@ -1102,17 +1104,15 @@ Por default: Usa la primera pero algunos atributos como getitem, query y scan us
 
 RCU = 1 SCR X SEGUNDO O 2 ECR X SEG, por un item de 4kb
 
-
 10 SCR SIZE 6KB
 
 COMO SON 6KB SE DEBE REDONDEAR A 8KB YA QUE DEBE TENER TAMAÑOS INTERMEDIOS Y UN ITEM DE LECTURA SON 4
 
-RCU = 10 * 8 / 4 = 20
+RCU = 10 \* 8 / 4 = 20
 
 16 ECR X SEG DE 12 KB
 
-16/2 * 12/4 = 24
-
+16/2 \* 12/4 = 24
 
 ### APIS DYNAMODB
 
@@ -1125,6 +1125,7 @@ Scan parallel scans ineficiente es mejor usar query
 
 Permite cambiar el sort_key y de esta formar poder hacer un manejo se define durante la creación de la tabla
 No existe ningun throttling
+
 ### Global secondary Index - Dynamodb
 
 GSI = PARTITION KEY + OPTIONAL SORT KEY
@@ -1133,6 +1134,7 @@ Lo que hace es crear una nueva tabla en base de la primera en donde se puede cam
 Si se escoje o se configura mal , entonces la tabla principal se puede joder.
 
 ### Concurrency DynamoDB
+
 optimistic locking
 
 ### Dax = DynamoDB ACCELERATOR
@@ -1144,10 +1146,9 @@ El cliente se comunica con dax y dax con la bd y cuando devuelve dax guarda en c
 
 Cuando se hace algun cambio en dynamodb como create, update, delete puede terminar en un stream, y estos stream pueden ingresar mediante un lambda y solo tiene 24 horas de retención de datos
 
-
 ### TTL (TIME TO LIVE)
 
-Se define un item y en base a item los datos que expiran se eliminan 
+Se define un item y en base a item los datos que expiran se eliminan
 
 project expression : sirve para traer unos elementos que quiero en especifico de la tabla
 filter expression: como su nombre lo dice filtrar y traer datos
@@ -1163,24 +1164,26 @@ paginación:
 Crear, actualizar, borrar varias filas en diferentes tablas al mismo tiempo, es una nueva caracteristica de dynamodb
 
 ### security
+
 Acceso mediante vpc
 Contorl IAM
 Encriptacion KMS SSL TLS
 BACKUPS Y RESTAURACIÓN
-Global tables para muchas regiones 
+Global tables para muchas regiones
 AMAZON DMS para migrar de mongo, oracle, entre otros
 se puede configurar dynamodb localmente para propositos de desarrollo
 
 # API GATEWAY
 
 Maneja tambien versionamiento como lambda
-Es necesario hacer el deployment para que tenga efectos 
-Stages son aquellos que se despliegan 
+Es necesario hacer el deployment para que tenga efectos
+Stages son aquellos que se despliegan
 Podemos hacer un rolled back de cualquier deployment
 
 Stages dev prod test y maneja los alias que tienene aliases y veriones para poder ir cambiando el comportamiento de cada uno
 
 ### Canary deployment
+
 Escoge cuanto porcentaje quiere usar en cada uno de los dos versiones de api gateway que se pueden usar es una especi de blue/green
 
 ### Mapping templates
@@ -1192,13 +1195,14 @@ Velocity template Language (VTL)
 Sirve para devovler un JSON a XML
 
 ### Api Gateway Cache
+
 Reduce el numero de llamados que se le hacen al backend
 default ttl 300 sgs 0s a 3600s
 capacidad 0.5 a 237gb
-el cliente puede saltarse cache 
+el cliente puede saltarse cache
 
+### Cors
 
-### Cors 
 Para habilitarlos debe tener OPTIONS y debe tener los siguientes headers:
 Access-Control-Allow-Methods
 Access-Control-Allow-Headers
@@ -1206,17 +1210,19 @@ Access-Control-Allow-Origin
 
 ### Security
 
-
 ### IAM
-SIG V4 - IAM 
+
+SIG V4 - IAM
 Para roles o usuarios de su cuenta
+
 #### Lambda Authorizer
+
 Validar el token que se esta pasando por el header
 OAuth / SAML /
 Esta sirve para personas externas a nuestra infraestructura y poderlo validar
 
-
 #### Cognito
+
 Es otra forma tambien para la seguridad de los lambda, es para autenticación no para autorización
 
 ## Cognito
@@ -1227,3 +1233,61 @@ Sirve para dar a los usuarios una identidad y estos pueden interactuar con nuest
 - Cognito identity pools: permite acceder a los recursos directos de AWS
 - Cognito Sync ahora lo remplaza ahora AppSync, guarda prefenrencias, configuraciones y estados de la app.
 
+# SAM
+
+Desarrollar y desplegar aplicaciones serveles
+YAML code con cloudformation
+2 comandos para desplegar a AWS
+
+Transform -> indica que es un template de SAM
+
+function , api, simpletable recursos de AWS
+
+Aws cloudformation package o sam package para el package
+cloudformation deploy / sam deploy x
+
+# ECS , ECR , FARGATE
+
+## ECS Clusters
+
+- agrupacion de instancias de ec2
+- corren ecs agentes que son contenedores docker
+- estos agentes registran las instancias en ecs cluster, corren un ami realizado para ECS
+- Estos son los que corren las imagenes de docker en EC2
+
+### Task definitions :
+
+METADATA en Json para decirle como correr un contenedor de docker, contiene nombre de la imagen, puertos, memoria, cpu, variables de entorno, informacion de la red
+Port Mapping: puerto donde pasa el trafico y puerto dentro del contenedor.
+
+### ECS Service
+
+define cuantas tareas deberian estar corriendo y como deben estar corriendo
+
+### ECS Service with Load Balancer
+
+Recbe nuestro trafico de internet y lo envia adecuadamente a cada uno
+
+## ECR
+
+- Guardar imagenes privadas en amazon ECR
+- Es controlado por IAM
+- Se guardan como repositorios que tienen nuestras propias imagenes que hemos creado.
+- Cuando se tiene en ECR se puede subir a ECS
+
+## Fargate
+
+- Serverless
+- Solo se crea un task definition y no toca hacer nada como el ECS
+- AWS Administra todo
+
+### Elastic Beanstalk + ECS
+
+Elastic puede en single o multi docker container mode
+Requiere un archivo de configuración dockerrun.aws.json
+
+### EKS 
+
+Maneja Kubernetes por AWS
+
+## OTHER SERVICES
