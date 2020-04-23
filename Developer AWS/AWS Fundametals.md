@@ -1286,8 +1286,48 @@ Recbe nuestro trafico de internet y lo envia adecuadamente a cada uno
 Elastic puede en single o multi docker container mode
 Requiere un archivo de configuración dockerrun.aws.json
 
-### EKS 
+### EKS
 
 Maneja Kubernetes por AWS
 
 ## OTHER SERVICES
+
+### CloudFront
+
+- Entrega de contenido
+- Ayuda a proteger de ataques la red
+- Soporta videos y media
+- Conectar punto de punto
+
+### Step function y SWF
+
+- Orquestar las funciones lambda
+- Se representa como una maquina de estados JSON
+- Se puede integrar con ec2, ecs, api gateway
+- Workflow
+
+### SWF
+
+- Cordina el trabajo entre codigo y aplicaciones
+- Corre en un EC2
+- Es un SWF ya se esta depreciando por step functions
+
+### SES
+
+- Enviar emails mediante la interfaz o con el sdk
+- Se integra con IAM permitiendo enviar emai
+
+### Base de datos
+
+- RDS: Bases de datos relacioneles
+- DynamoDB: NoSQL
+- ElastiCache: Base de datos en memoria , redis, memcached
+- Redshift: Olap: procesamiento analitico
+- Neptune: Graph base de datos
+- DMS: Database migration service
+
+### ACM
+
+- Para certificados SSL.
+- Se pueden comprar sus propios SSL o compralos en AWS e integrarlos.
+
