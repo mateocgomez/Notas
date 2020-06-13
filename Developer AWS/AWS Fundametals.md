@@ -10,9 +10,10 @@ Consolas de AWS tienen alcanzes de zonas menos IAM y S3
 
 Toda la seguridad de AWS esta aca:
 
-1. Usuarios
-2. Grupos
-3. Roles
+1. Usuarios: son las diferentes personas que van a utilizar la consola de AWS.
+2. Grupos: son una colección de usuarios. Cada usuario del grupo hereda los permisos del grupo.
+3. Politicas: las politicas se especifican en documentos, de tipo JSON, donde se otorgan permisos especificos sobre lo que puede hacer un usuario, grupo o un rol.
+4. Roles
 
 Una cuenta root y se compartirguleagulo
 Usuarios se crear para tener permisos
