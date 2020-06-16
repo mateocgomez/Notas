@@ -150,6 +150,9 @@ Todas se pueden mezclar, cualquier forma de escribir react
 useState -> retorna dos posiciones de un arreglo , el estado actual y el que cambia el state
 useEffect -> metodos del ciclo de vida
 
+Los states no se modifican directamente ojo.
+...carrito -> express operator esto lo que hace es generar una copia del carrito y podemos pasarlo
+
 ## Eventos
 
 Maneja los eventos como vue.js con onClick e.t.c
