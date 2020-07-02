@@ -179,3 +179,15 @@ Para guardar información se debe almacenar en el localstorage
 ## Extras para Chrome
 - Instalar react developer tools
 
+
+## Ternario 
+
+{
+    test : en caso de que el codigo sea ? en caso de que el codigo no sea
+}
+
+## Helper
+Es un archivo que contiene ciertas funciones y se puede reutilizar en ciertos lados, y los componentes no queden tan cargados
+
+## Hooks:UseEffect
+Este hook remplaza a componentdidmount, componentdidupdate y componentwillinmount 
