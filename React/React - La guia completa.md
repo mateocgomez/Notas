@@ -191,3 +191,15 @@ Es un archivo que contiene ciertas funciones y se puede reutilizar en ciertos la
 
 ## Hooks:UseEffect
 Este hook remplaza a componentdidmount, componentdidupdate y componentwillinmount 
+
+## Styled Components
+
+Estos sirven para integrar el codigo CSS en la misma vista jsx, como react maneja componentes se evita cargar todo el codigo css y mediante este permite usar el css como js, de esta forma el performance de la aplicacion mejorara
+
+Pagina de styled componentes : https://emotion.sh/docs/introduction
+Para instalar styled components : npm i @emotion/styled @emotion/core
+
+Snippets para vscode
+1. 	styled-components-snippets 💅🏻
+2. vscode-styled-components 💅🏻
+3. Styled-Snippets 🙅🏻‍♀️
