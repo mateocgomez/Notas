@@ -203,3 +203,28 @@ Snippets para vscode
 1. 	styled-components-snippets 💅🏻
 2. vscode-styled-components 💅🏻
 3. Styled-Snippets 🙅🏻‍♀️
+
+
+Ejemplo de condigo con styled
+
+
+```js
+import styled from '@emotion/styled';
+const ContenedorHeader = styled.header`
+    background-color
+`;
+```
+
+## Transiciones en React.js
+
+La libreria npm i react-transition-group , permite trabajar muy bien las transiciones con react.
+
+```js
+import styled from "@emotion/styled";
+import {TransitionGroup, CSSTransition} from 'react-transition-group'
+```
+## CONSUMIR APIS EN REACT
+
+1. Fetch Api y Ajax
+2. Axios
+3. Jquery y ajax
