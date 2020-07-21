@@ -122,3 +122,14 @@ const metallica = {banda, genero, canciones};
 console.log(metallica);
 ```
 De esta forma se une todas las variables en un objeto
+
+### ARRAYS 🚀
+
+.push -> ingresa un valor al final del arreglo
+.unshift -> ingresa un valor al principio del arreglo
+
+.pop -> remueve el ultimo valor del arreglo
+.shift -> remueve el primer valor del arreglo
+
+.indexOf() -> returna la posicion en la que esta el elemto el arreglo, si no esta en el arreglo retorna un -1 ya que no esta en el arreglo
+
