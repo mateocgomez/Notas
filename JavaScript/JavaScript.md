@@ -88,7 +88,7 @@ console.log(viaje);
 Son aquellos objetos que tienen el this.nombre o this.apellido , implementando mediante los this.
 
 ### Prototipo
-
+JS ES UN LENGUAJE BASADO EN PROTOTIPOS, TODO OBJETO TIENE UN PROTOTIPO
 Para agregar un prototype se realiza de la siguiente forma, prototipo permite atar funciones a un objeto
 
 ```js
@@ -142,3 +142,60 @@ De esta forma se une todas las variables en un objeto
 
 type="tel"
 pattern="[0-9]\*"
+
+### Objeto
+
+Los objetos en JS tambien conocidos en otros lenguajes como clases son aquellos blueprint para poder sacar instancias, las instancias son aquellos atributos que se le pueden asignar al objeto.
+
+```js
+
+OBJETO
+Persona {
+  nombre
+  edad
+  trabajo
+  calcularlaedad()
+}
+
+INSTANCIA
+var mate {
+  mateo,
+  26,
+  ingeniero,
+  calcularlaedad()
+}
+```
+
+Puedo tener otros objetos y re usar el objeto persona en otro objeto eso se conoce como inheritance
+
+```js
+Persona {
+  nombre
+  edad
+  trabajo
+  calcularlaedad()
+}
+
+atleta {
+  olimpico,
+  medallasolimpicas
+  paseolimpicos()
+}
+
+inheritance
+
+atleta {
+  olimpico,
+  medallasolimpicas
+  paseolimpicos()
+    nombre
+  edad
+  trabajo
+  calcularlaedad()
+}
+
+```
+
+### Datos primitivos y objetos
+
+En js se le considera datos primitivos a los string, number, boolean, undefined y null. Al resto se le conocen como objetos como arrays, objects, functions,date , wrappers for number,string,boolean
