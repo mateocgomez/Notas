@@ -228,3 +228,13 @@ import {TransitionGroup, CSSTransition} from 'react-transition-group'
 1. Fetch Api y Ajax
 2. Axios
 3. Jquery y ajax
+
+## useContext
+
+Pasar state desde el componente principal hasta los hijos, sin necesidad de pasarlo por cada componente
+
+Datos se pansan de principal al hijo
+
+Se puede actualizar el state desde el hijo o ejecutar una funcion que lo actualizar
+
+Si el proyecto es sencillo es mejor usar props si ya esta hecha la aplicacion
