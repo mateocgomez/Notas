@@ -238,3 +238,14 @@ Datos se pansan de principal al hijo
 Se puede actualizar el state desde el hijo o ejecutar una funcion que lo actualizar
 
 Si el proyecto es sencillo es mejor usar props si ya esta hecha la aplicacion
+
+Se debe usar el create context de react, todo context tiene un Provider
+
+Los provider es donde se encuentran las funciones y el state
+
+se crea el context con el createcontext
+todo lo que este dentro del provider como value es lo que se va a poder usar
+
+Se debe poner en el arbol principal para poder pasarlo a los hijos
+
+Para consumirlo se debe usar  usecontext y en la funcion se debe llamar la variable que se usa como createcontext
