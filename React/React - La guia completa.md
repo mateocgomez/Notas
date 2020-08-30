@@ -249,3 +249,46 @@ todo lo que este dentro del provider como value es lo que se va a poder usar
 Se debe poner en el arbol principal para poder pasarlo a los hijos
 
 Para consumirlo se debe usar  usecontext y en la funcion se debe llamar la variable que se usa como createcontext
+
+
+## Class Component
+
+Tiene la clase y se extiede al componente de react.
+
+## Redux
+
+1 Store por una sola aplicacion
+el store envia un state y un action al reducer, pueden existir distintos reducers para eso se usa combinereducers
+
+
+
+Los reducers tienen los state los cuales son objetos que se definen con lo que tenga la app ejemplo:
+```js
+const initialState = {
+    productos: [],
+    error: null,
+    loading: false
+}
+```
+
+El reducer son funciones, que saben que hacer con los action y los paylod (datos) que pasa el store
+
+Los action son objetos de js, los cuales tienen un tipo de dato y un paylod ejemplo
+
+```js
+export function crearNuevoProductoAction() {
+  return () => {
+    console.log("desde action");
+  };
+}
+```
+
+Una vez le llega al reducer el state y el action es devuelve un nuevostate
+
+Los types describen que pasa en la aplicacion, se utilizan en el action y en el reducer se evalua cada condicion para modificar el state de acuerdo a lo que esta sucediendo
+ - Se usan en reducer y en el action
+
+
+ usedispatch permite ejecutar las acciones
+
+ useselector permite ingresar al state dentro del componente
