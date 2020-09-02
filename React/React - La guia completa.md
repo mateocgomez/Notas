@@ -39,7 +39,7 @@ Evita configurar webpack y babel
 ## Snippets React
 - imr snippet automatico para importar la libreria de react
 - sfc snippet para crear la función automaticamente 🌚 
-
+- cf snippet funcion flecha
 
 ## Fragment
 1. Importando esta libreria permite usar fragment como div padre y no lo va a generar en el DOM, de esta forma no se va a generar div que no se necesitan.
