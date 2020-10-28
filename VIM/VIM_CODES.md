@@ -42,4 +42,29 @@
 
 ### NERDTREE
 Para abrir nerd es espacio y nt y con m se puede ver el menu de nerdtree
+
+### ESTO SIRVE PARA INSTALAR LOS PLUGINS EN EL FOLDER ~/.vimrc
+
+call plug#begin('~/.vim/plugged')
+
+" Themes
+Plug 'morhetz/gruvbox'
+
+
+" IDE
+
+
+Plug 'scrooloose/nerdtree'
+Plug 'easymotion/vim-easymotion'
+
+Plug 'christoomey/vim-tmux-navigator'
+call plug#end()
+
+colorscheme gruvbox
+let g:gruvbox_contrast_dark = "hard"
+let NERDTreeQuitOnOpen=1
+
+let mapleader=" "
+nmap <Leader>s <Plug>(easymotion-s2)
+nmap <Leader>nt :NERDTreeFind<CR> 
  
